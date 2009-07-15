@@ -4,6 +4,8 @@
 #include <somanetwork/event.h>
 #include <somanetwork/eventtx.h>
 #include <boost/utility.hpp> 
+#include <boost/shared_ptr.hpp>
+
 #include <synthsoma2/sslogging.h>
 
 namespace synthsoma2
@@ -13,6 +15,10 @@ namespace synthsoma2
   const int MAXEVENT = 80; 
   
   typedef uint64_t ecyclecnt_t; 
+  typedef std::list<sn::EventTX_t> eventtxlist_t; 
+  typedef sn::EventList_t eventlist_t; 
+
+  class NetEventSender; 
 }
 
 #endif // 

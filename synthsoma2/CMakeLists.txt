@@ -5,6 +5,8 @@ include_directories(${SOMADEPS_INCLUDE_DIRS})
 set(synthsoma2_SRCS
   sslogging.cc
   eventrouter.cc
+  neteventsender.cc
+  asioutil.cc
 
 )
 

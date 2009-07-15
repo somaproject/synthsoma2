@@ -16,9 +16,15 @@ add_executable(eventrouter_test
   eventrouter_test.cc
 )
 
+add_executable(tsretxbuffer_test
+  runner.cc
+  tsretxbuffer_test.cc
+)
+
 set(testlist 
   simple_test
   eventrouter_test
+  tsretxbuffer_test
 )
 
 foreach(testname ${testlist})

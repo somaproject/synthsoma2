@@ -44,7 +44,7 @@ namespace synthsoma2
     */
 
     void addEvent(sn::eventsource_t src, sn::EventTX_t et); 
-    const std::list<sn::Event_t> gatherEvents(sn::eventsource_t src); 
+    const eventlist_t gatherEvents(sn::eventsource_t src); 
     
   private:
     

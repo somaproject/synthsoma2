@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE(enable)
   synthsoma2::EventRouter er; 
   
   er.enableDevice(0); 
-  std::list<sn::Event_t> e = er.gatherEvents(0); 
+  eventlist_t e = er.gatherEvents(0); 
   BOOST_CHECK_EQUAL(e.size(), 0); 
 
   // now break things
@@ -81,7 +81,7 @@ BOOST_AUTO_TEST_CASE(onetoone)
     EventTX_t t1; 
     t1.destaddr[edest] = true; 
     if (i % 5 == 0) {
-      t1.destaddr[edest] = true; 
+      t1.destaddr[edest2] = true; 
     }
     t1.event.data[0] = 0x1234; 
     t1.event.data[1] = i; 
@@ -91,7 +91,7 @@ BOOST_AUTO_TEST_CASE(onetoone)
     er.addEvent(0, t1); 
     
     er.processEventCycle(); 
-    std::list<sn::Event_t> el = er.gatherEvents(edest); 
+    eventlist_t el = er.gatherEvents(edest); 
     BOOST_CHECK_EQUAL(el.size(), 1); 
     if (el.size() > 1) {
       BOOST_CHECK_EQUAL(el.front().data[0], 0x1234); 
@@ -99,10 +99,10 @@ BOOST_AUTO_TEST_CASE(onetoone)
       
     }
     
-    std::list<sn::Event_t> el2 = er.gatherEvents(edest2); 
+    eventlist_t el2 = er.gatherEvents(edest2); 
     if (i % 5 == 0) {
       BOOST_CHECK_EQUAL(el2.size(), 1); 
-      if (el.size() > 1) {
+      if (el2.size() > 1) {
 	BOOST_CHECK_EQUAL(el2.front().data[0], 0x1234); 
 	BOOST_CHECK_EQUAL(el2.front().data[1], i);
 	

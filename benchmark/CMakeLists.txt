@@ -10,6 +10,10 @@ add_executable(asioudp
   asioudp.cc
 )
 
+add_executable(pipeserver
+  pipeserver.cc
+)
+
 add_executable(blocking_udp
   blocking_udp.cc
 )
@@ -23,6 +27,12 @@ target_link_libraries(asioudp
   ${Boost_LIBRARIES} 
   ${SOMADEPS_LIBRARIES}
   
+  )
+
+
+target_link_libraries(pipeserver
+  ${Boost_LIBRARIES} 
+  ${SOMADEPS_LIBRARIES}
   )
 
 

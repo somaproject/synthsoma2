@@ -31,7 +31,7 @@ namespace synthsoma2
 
   }
 
-  const std::list<sn::Event_t> EventRouter::gatherEvents(sn::eventsource_t src)
+  const eventlist_t EventRouter::gatherEvents(sn::eventsource_t src)
   {
     if (src >= MAXEVENT) {
       throw std::runtime_error("Cannot obtain events for non-enabled device"); 
@@ -42,9 +42,9 @@ namespace synthsoma2
       throw std::runtime_error("Device is not enabled, cannot gather events"); 
     }
 
-    std::list<sn::Event_t> s; 
+    eventlist_t s; 
     copy(outputbuffers_[src].begin(), outputbuffers_[src].end(), 
-	 std::front_insert_iterator<std::list<sn::Event_t> >(s)); 
+	 std::back_insert_iterator<eventlist_t >(s)); 
     outputbuffers_[src].clear(); 
     return s; 
   }
@@ -59,6 +59,9 @@ namespace synthsoma2
   
 
   void EventRouter::processEventCycle() {
+    if (cycleHasBeenProcessed_) {
+      throw std::runtime_error("Cycle has been processed already"); 
+    }
 
     // For each event source
     for (int i = 0; i < MAXEVENT; i++) {
