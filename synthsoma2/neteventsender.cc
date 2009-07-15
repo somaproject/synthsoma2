@@ -4,7 +4,7 @@
 
 #include "neteventsender.h"
 #include <somanetwork/ports.h>
-
+#include "sslogging.h"
 namespace synthsoma2
 {
   using namespace boost::asio; 
@@ -12,7 +12,7 @@ namespace synthsoma2
   pNetEventSender_t NetEventSender::createDomain(boost::filesystem::path basedir)
   {
     pio_service_t ios(new io_service());
-    senderproxy::pDatagram_t sp(new senderproxy::LocalDatagram(*ios, basedir / "eventtx")); 
+    senderproxy::pDatagram_t sp(new senderproxy::LocalDatagram(*ios, basedir / "eventrx")); 
 
     return pNetEventSender_t(new NetEventSender(ios, sp)); 
     
@@ -39,14 +39,12 @@ namespace synthsoma2
     seq_(0), 
     workerthread_(0)
   {
-    std::cout << "Constructor done" << std::endl; 
-    //inpipeArm(); 
+    inpipeArm(); 
 
   }
 
   NetEventSender::~NetEventSender()
   {
-    std::cout << "Calling destructor" << std::endl; 
 
   }
 
@@ -122,16 +120,15 @@ namespace synthsoma2
     /* 
        Transmit the current event list
     */ 
-
     std::vector<char> buf = sn::createEventBuffer(seq_, pendingEventList_); 
-
+    
     // now send the actual buffer? 
     sp_->send(buf); 
-    
     // now commit it to the retx buffer; 
     if(pReTxBuffer_) {
       pReTxBuffer_->save(seq_, buf); 
     }
+
     
     // cleanup
     seq_++; 

@@ -27,6 +27,7 @@ add_executable(runtest
 
 add_executable(neteventsender_test
   runner.cc
+  testutil.cc
   neteventsender_test.cc
 )
 

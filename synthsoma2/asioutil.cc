@@ -9,8 +9,7 @@ namespace synthsoma2
       socket_(service), 
       endpoint_(sockname.string())
     {
-      /// set up the endpoint
-      
+      socket_.open();
     }
     
     LocalDatagram::~LocalDatagram()
