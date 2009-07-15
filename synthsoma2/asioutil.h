@@ -19,7 +19,7 @@ namespace synthsoma2 {
     {
     public:
       virtual void send(const std::vector<char> & ) = 0; 
-      virtual ~Datagram() = 0; 
+      virtual ~Datagram() {}; 
     }; 
     
     class LocalDatagram : public Datagram

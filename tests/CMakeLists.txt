@@ -21,10 +21,21 @@ add_executable(tsretxbuffer_test
   tsretxbuffer_test.cc
 )
 
+add_executable(runtest
+  runtest.cc
+)
+
+add_executable(neteventsender_test
+  runner.cc
+  neteventsender_test.cc
+)
+
 set(testlist 
   simple_test
   eventrouter_test
   tsretxbuffer_test
+  neteventsender_test
+  runtest
 )
 
 foreach(testname ${testlist})

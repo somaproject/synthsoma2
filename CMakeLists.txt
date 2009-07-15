@@ -8,7 +8,7 @@ find_package(PkgConfig)
 
 # we should handle this with build/release distinctions, but I'm not that l33t. 
 
-SET(CMAKE_CXX_FLAGS "-O2 ${CMAKE_CXX_FLAGS}")
+SET(CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}")
 
 pkg_check_modules(SOMADEPS REQUIRED
   somanetwork-1.0>=1.0

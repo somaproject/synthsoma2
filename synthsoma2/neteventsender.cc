@@ -11,15 +11,16 @@ namespace synthsoma2
 
   pNetEventSender_t NetEventSender::createDomain(boost::filesystem::path basedir)
   {
-    io_service * ios = new io_service;
+    io_service * ios = new io_service();
     senderproxy::LocalDatagram * sp = new senderproxy::LocalDatagram(*ios, basedir / "eventtx"); 
-    return pNetEventSender_t(new NetEventSender(ios, sp)); 
 
+    return pNetEventSender_t(new NetEventSender(ios, sp)); 
+    
   }
 
   pNetEventSender_t NetEventSender::createINet()
   {
-    boost::asio::io_service * ios = new boost::asio::io_service;
+    boost::asio::io_service * ios = new boost::asio::io_service();
     std::string ip("127.0.0.1"); 
     senderproxy::INetDatagram *  sp = 
       new senderproxy::INetDatagram(*ios, ip, sn::EVENTRXPORT); 
@@ -39,13 +40,17 @@ namespace synthsoma2
     seq_(0), 
     workerthread_(0)
   {
+    std::cout << "Constructor done" << std::endl; 
     inpipeArm(); 
+
   }
 
   NetEventSender::~NetEventSender()
   {
-    delete ioservice_; 
+    std::cout << "Calling destructor" << std::endl; 
     delete sp_; 
+    delete ioservice_; 
+
   }
 
 
