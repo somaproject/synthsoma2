@@ -5,6 +5,7 @@
 #include <somanetwork/eventtx.h>
 #include <boost/utility.hpp> 
 #include <boost/shared_ptr.hpp>
+#include <boost/asio.hpp>
 
 #include <synthsoma2/sslogging.h>
 
@@ -19,6 +20,8 @@ namespace synthsoma2
   typedef sn::EventList_t eventlist_t; 
 
   class NetEventSender; 
+
+  typedef boost::shared_ptr<boost::asio::io_service> pio_service_t; 
 }
 
 #endif // 

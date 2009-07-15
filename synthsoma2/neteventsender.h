@@ -49,8 +49,8 @@ namespace synthsoma2
     ~NetEventSender(); 
     
   private:
-    NetEventSender(boost::asio::io_service * service, 
-		   senderproxy::Datagram * ); 
+    NetEventSender(pio_service_t service, 
+		   senderproxy::pDatagram_t ); 
 
     void newEventsOnFifo(const boost::system::error_code & error, 
 		 size_t bytes_received);
@@ -63,9 +63,9 @@ namespace synthsoma2
     size_t eventCount_; 
     sn::TSPipeFifo<eventlist_t> fifo_; 
 
-    boost::asio::io_service * ioservice_; 
-    senderproxy::Datagram * sp_; 
-    boost::asio::posix::stream_descriptor inpipe_;
+    pio_service_t  ioservice_; 
+    senderproxy::pDatagram_t sp_; 
+    boost::asio::posix::stream_descriptor inpipe_ ;
 
     enum { max_length = 1024 };
     char data_[max_length];

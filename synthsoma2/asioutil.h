@@ -21,6 +21,8 @@ namespace synthsoma2 {
       virtual void send(const std::vector<char> & ) = 0; 
       virtual ~Datagram() {}; 
     }; 
+
+    typedef boost::shared_ptr<Datagram> pDatagram_t;
     
     class LocalDatagram : public Datagram
     {
