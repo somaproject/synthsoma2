@@ -25,6 +25,7 @@ BOOST_DECLARE_LOG(synthsoma2_l, synthsoma2_finder::logger)
 namespace synthsoma2 
 {
   
+  using namespace boost::logging::level; 
 
   void init_logs( boost::logging::level::type level); 
 

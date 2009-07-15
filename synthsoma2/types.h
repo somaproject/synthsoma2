@@ -3,11 +3,16 @@
 
 #include <somanetwork/event.h>
 #include <somanetwork/eventtx.h>
+#include <boost/utility.hpp> 
+#include <synthsoma2/sslogging.h>
 
 namespace synthsoma2
 {
   namespace sn = somanetwork;   
   
+  const int MAXEVENT = 80; 
+  
+  typedef uint64_t ecyclecnt_t; 
 }
 
 #endif // 

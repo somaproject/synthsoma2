@@ -11,14 +11,20 @@ add_executable(simple_test
   simple_test.cc
 )
 
+add_executable(eventrouter_test
+  runner.cc
+  eventrouter_test.cc
+)
+
 set(testlist 
   simple_test
+  eventrouter_test
 )
 
 foreach(testname ${testlist})
   
   target_link_libraries(${testname}
-
+    synthsoma2_test
     ${Boost_LIBRARIES} 
     ${SOMADEPS_LIBRARIES}
 

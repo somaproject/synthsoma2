@@ -14,8 +14,18 @@ The EventRouterBuffer basically works like the event buffer, taking
 in EventTX_t packets from each of N sources, redistributing them 
 
 eventRouter.add(eventsrc_t, EventTX_t)
-ecyclecnt_t eventRouter.ecycle()
-eventRotuer.gatherEvents(eventsrc_t ): get events pending for this source
+
+ecyclecnt_t eventRouter.startecycle() : signal an "event cycle", and take
+at most one event from each src and place it in the output queue
+
+eventrouter::dispatchEcycleEvents()
+
+
+eventRotuter.gatherEvents(eventsrc_t)
+get events pending for this source that have been sent since the last invocation	
+ of gatherEvents()
+
+
 
 FIXME: Do we want to use the boost::circular buffer here? 
 
