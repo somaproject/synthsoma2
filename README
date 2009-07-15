@@ -1,0 +1,19 @@
+This is our attempt at a v2 of SynthSoma. 
+
+Goals: 
+
+Sufficiently performant. That means that it's going
+to have to be able to send out 2000 packets for second
+minimum (for events)
+
+Multithreaded : Devices (both event and data) will
+be independently threaded
+
+Code Reuse / real reuse: Be able to use the actual
+dspio code
+
+Ease of implementation: be able to write python modules
+that emulate events
+
+We want this to work for both domain sockets and local
+

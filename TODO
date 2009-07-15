@@ -1,0 +1,4 @@
+1. Can boost.asio send 10k packets/sec? 
+2. Can the IPC mechanisms of boost::interprocess be integrated
+with boost.asio? 
+

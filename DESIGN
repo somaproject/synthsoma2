@@ -1,0 +1,17 @@
+The design here is similar to soma, with a network layer handling
+all arbitration, retransmission, and packetizing. 
+
+Perhaps the only in-process event source will be the timer? 
+
+Look, this thing is going to be spinning really hard, do we really
+need boost::asio? 
+
+
+Core mechanism looks like this for events. Data is its own world. 
+
+EventRouterBuffer: 
+
+
+eventRouter.add(src, EventTX_t)
+eventRouter.ecycle()
+eventRotuer.gatherEvents()
