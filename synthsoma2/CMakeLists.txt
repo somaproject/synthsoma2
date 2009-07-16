@@ -2,6 +2,12 @@
 include_directories(${Boost_INCLUDE_DIRS})
 include_directories(${SOMADEPS_INCLUDE_DIRS})
 
+link_directories(
+  ${Boost_LIBRARY_DIRS}
+  ${SOMADEPS_LIBRARY_DIRS}
+)
+
+
 set(synthsoma2_SRCS
   sslogging.cc
   eventrouter.cc
@@ -18,10 +24,29 @@ ADD_LIBRARY(synthsoma2_test
   ${synthsoma2_SRCS}
 )
 
+
+ADD_LIBRARY(pysynthsoma2 SHARED
+  ${synthsoma2_SRCS}
+  pysynthsoma2.cc
+)
+
+include(FindPythonLibs)
+include_directories(${PYTHON_INCLUDE_PATH})
+
+
 target_link_libraries(synthsoma2_test
   synthsoma2_devices_test
   ${Boost_LIBRARIES} 
   ${SOMADEPS_LIBRARIES}
 )
+
+
+target_link_libraries(pysynthsoma2
+  ${Boost_LIBRARIES} 
+  ${SOMADEPS_LIBRARIES}
+  ${PYTHON_LIBRARY}
+
+)
+set_target_properties(pysynthsoma2 PROPERTIES PREFIX "")
 
 add_subdirectory(devices)
