@@ -8,7 +8,7 @@
 
 namespace synthsoma2
 {
-  class EventBus
+  class EventBus : public boost::noncopyable
   {
     /*
       Largely handles managing the devices, and serves as a higher-order

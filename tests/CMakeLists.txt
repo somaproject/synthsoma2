@@ -6,6 +6,9 @@ link_directories(
   ${SOMADEPS_LIBRARY_DIRS}
 )
 
+include(FindPythonLibs)
+include_directories(${PYTHON_INCLUDE_PATH})
+
 add_executable(simple_test
   runner.cc
   simple_test.cc
@@ -53,7 +56,7 @@ foreach(testname ${testlist})
     synthsoma2_test
     ${Boost_LIBRARIES} 
     ${SOMADEPS_LIBRARIES}
-
+    ${PYTHON_LIBRARY}
     )
   
   ADD_TEST(${testname} ${testname})

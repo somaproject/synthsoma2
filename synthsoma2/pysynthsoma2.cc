@@ -7,7 +7,9 @@
 #include <boost/python/suite/indexing/vector_indexing_suite.hpp>
 #include <boost/python/suite/indexing/map_indexing_suite.hpp>
 
+
 #include <synthsoma2/syntheticsoma.h>
+#include <synthsoma2/eventbus.h>
 
 using namespace boost::python;
 
@@ -21,6 +23,10 @@ BOOST_PYTHON_MODULE(pysynthsoma2)
     .def_readonly("eventsenttotal", &runnerstats_t::eventsenttotal)
     .def_readonly("eventreceivetotal", &runnerstats_t::eventreceivetotal); 
   
-
+  map_indexing_suite<EventBus::devicemap_t>(); 
+  //class_<devicemap_t> 
+  class_<EventBus, boost::noncopyable, pEventBus_t>("EventBus", 
+						    init<EventBus::devicemap_t>()); 
+  
 
 }
