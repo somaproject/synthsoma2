@@ -54,7 +54,7 @@ namespace synthsoma2
     ecyclecnt_++; 
     ecyclesig_(ecyclecnt_); 
     cycleHasBeenProcessed_ = false; 
-
+    
   }
   
 
@@ -103,6 +103,26 @@ namespace synthsoma2
     }
     
     inputbuffers_[src].push_back(et);     
+    
+  }
+
+  void EventRouter::addEvents(sn::eventsource_t src, const eventtxlist_t & et)
+  {
+    
+    if (src >= MAXEVENT) {
+      throw std::runtime_error("Cannot obtain events for src >= MAXEVCENT"); 
+
+    }
+    
+    if (inputbuffers_[src].size() + et.size() > INPUTBUFFER_WARN) {
+      SS2L_(warning) << "EventRouter: Input buffer " 
+		  << src << " near overflow"; 
+      
+    }
+    for (eventtxlist_t::const_iterator eti = et.begin(); eti != et.end(); eti++)
+      {
+	inputbuffers_[src].push_back(*eti);     
+      }
     
   }
  

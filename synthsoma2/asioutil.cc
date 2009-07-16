@@ -30,7 +30,7 @@ namespace synthsoma2
       endpoint_(ip::address_v4::from_string(ip), destport)
     {
       /// set up the endpoint
-      
+      //socket_.open(); 
     }
 
     INetDatagram::~INetDatagram()

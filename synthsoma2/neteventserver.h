@@ -3,6 +3,7 @@
 
 #include <synthsoma2/types.h>
 #include <synthsoma2/eventdevice.h>
+#include <synthsoma2/neteventsender.h>
 
 namespace synthsoma2
 {
@@ -10,19 +11,25 @@ namespace synthsoma2
     This is the multithreaded synthetic event server. 
     The interface to the world is the standard thread-safe 
     
-    The idea here is that we run three-ish threads
+    THis is basically an aggregator for:
+    NetEventSender
+    NetEventReTX
+    NetEventReceiver
+    
+     
    */ 
   class NetEventServer : public IEventDevice, 
 			 boost::noncopyable
   {
   public:
     // factory methods
-    pNetEventServer_t createINet(); 
-    pNetEventServer_t createDomain(); 
+    static pNetEventServer_t createINet(); 
+    static pNetEventServer_t createDomain(boost::filesystem::path root); 
     
     // run()
     void run(); 
     void shutdown(); 
+    void setDeviceID(sn::eventsource_t id); 
 
     // 
     void ecycle(ecyclecnt_t); 
@@ -33,8 +40,10 @@ namespace synthsoma2
     
     ~NetEventServer();
   private:
-    NetEventServer(); 
-
+    NetEventServer(pNetEventSender_t); 
+    pNetEventSender_t pNetEventSender_; 
+    
+    
   }; 
   
   typedef boost::shared_ptr<NetEventServer> pNetEventServer_t; 

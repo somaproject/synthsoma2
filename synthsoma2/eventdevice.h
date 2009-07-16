@@ -13,9 +13,15 @@ namespace synthsoma2
   class IEventDevice {
   public:
     virtual void ecycle(ecyclecnt_t) = 0; 
+    virtual void setDeviceID(sn::eventsource_t id) = 0; 
     virtual eventtxlist_t getTXEvents() = 0; 
     virtual void sendEvents(const eventlist_t &) = 0; 
+    virtual void run() = 0; 
+    virtual void shutdown() = 0; 
+
   }; 
+  
+  typedef boost::shared_ptr<IEventDevice> pEventDevice_t; 
   
 }
 

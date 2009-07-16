@@ -44,6 +44,7 @@ namespace synthsoma2
     */
 
     void addEvent(sn::eventsource_t src, sn::EventTX_t et); 
+    void addEvents(sn::eventsource_t src, const  eventtxlist_t & et); 
     const eventlist_t gatherEvents(sn::eventsource_t src); 
     
   private:
@@ -64,6 +65,8 @@ namespace synthsoma2
     boost::ptr_vector<outputbuffer_t> outputbuffers_; 
     
   }; 
+
+  typedef boost::shared_ptr<EventRouter> pEventRouter_t; 
 
 }
 

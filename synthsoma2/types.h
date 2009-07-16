@@ -22,6 +22,17 @@ namespace synthsoma2
   class NetEventSender; 
 
   typedef boost::shared_ptr<boost::asio::io_service> pio_service_t; 
+
+
+  class NetEventServer;
+  typedef boost::shared_ptr<NetEventServer> pNetEventServer_t; 
+
+  class EventBus; 
+  typedef boost::shared_ptr<EventBus> pEventBus_t; 
+  
+  class DataBus;
+  typedef boost::shared_ptr<DataBus> pDataBus_t; 
+
 }
 
 #endif // 

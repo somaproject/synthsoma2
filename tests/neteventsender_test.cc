@@ -44,7 +44,7 @@ BOOST_AUTO_TEST_CASE(startup)
 
 }
 
-BOOST_AUTO_TEST_CASE(startup_send_single_event)
+BOOST_AUTO_TEST_CASE(startup_send_few_events)
 {
   // Can we just start and end
   boost::filesystem::path tgtdir = createTempDir(); 
@@ -96,6 +96,5 @@ BOOST_AUTO_TEST_CASE(startup_send_single_event)
   nes->shutdown(); 
 
 }
-
 
 BOOST_AUTO_TEST_SUITE_END(); 
