@@ -25,7 +25,12 @@ namespace synthsoma2
 
     void LocalDatagram::send(const std::vector<char> & b)
     {
-      socket_.send_to(buffer(&b[0], b.size()), endpoint_); 
+      try { 
+	socket_.send_to(buffer(&b[0], b.size()), endpoint_); 
+      } catch (std::exception & e) {
+	// Really? we have to do this to avoid WAS_WOULDBLOCK? 
+	// IRC Confirms
+      }
     }
 
 

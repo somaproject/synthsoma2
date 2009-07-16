@@ -49,8 +49,7 @@ int main(int argc, char* argv[])
 
 
   if(vm.count("enable-network")) {
-    boost::filesystem::path fp("/tmp/test"); 
-    createBoundDomainSocket(fp / "eventrx"); 
+    boost::filesystem::path fp =  createTempDir(); 
     dm[4] = NetEventServer::createDomain(fp); 
   }
 
