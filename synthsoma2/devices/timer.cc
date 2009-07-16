@@ -14,6 +14,16 @@ namespace synthsoma2
 
   }
 
+  void Timer::run()
+  {
+
+  }
+
+  void Timer::shutdown()
+  {
+
+  }
+
   void Timer::setTimeStamp(timestamp_t ts) 
   {
     ts_ = ts; 

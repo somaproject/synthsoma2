@@ -17,10 +17,10 @@ namespace synthsoma2
       
       
     */
+  public:
     typedef std::map<sn::eventsource_t, pEventDevice_t> devicemap_t;     
     typedef std::pair<sn::eventsource_t, pEventDevice_t> devicepair_t;     
 
-  public:
     EventBus(devicemap_t devices); 
     ~EventBus(); 
 
@@ -30,6 +30,7 @@ namespace synthsoma2
     void event_cycle_callback(ecyclecnt_t cnt);
 
     void eventcycle(); 
+    std::pair<size_t, size_t> getTotalCounts(); 
 
   private:
     

@@ -4,7 +4,8 @@
 namespace synthsoma2
 {
   EventBus::EventBus(devicemap_t dev) :
-    devices_(dev)
+    devices_(dev), 
+    router_(new EventRouter())
   {
     
     router_->eventCycleSignal().connect(boost::bind(&EventBus::event_cycle_callback, 
@@ -31,6 +32,13 @@ namespace synthsoma2
     BOOST_FOREACH(devicepair_t p, devices_)
       {
 	p.second->setDeviceID(p.first); 
+	router_->enableDevice(p.first); 
+      }
+    
+    // then start the devices
+    BOOST_FOREACH(devicepair_t p, devices_)
+      {
+	p.second->run(); 
       }
     
   }
@@ -74,5 +82,11 @@ namespace synthsoma2
 	p.second->ecycle(cnt); 
       }
   }
-  
+
+  std::pair<size_t, size_t> EventBus::getTotalCounts() 
+  {
+    return router_->getTotalCounts(); 
+    
+  }
+
 }

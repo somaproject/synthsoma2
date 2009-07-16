@@ -8,7 +8,7 @@
 namespace synthsoma2
 {
 
-  class TestDevice : IEventDevice, 
+  class TestDevice : public IEventDevice, 
 		boost::noncopyable
   {
     typedef uint64_t timestamp_t; 
@@ -39,7 +39,7 @@ namespace synthsoma2
 
   }; 
 
-
+  typedef boost::shared_ptr<TestDevice> pTestDevice_t; 
 
 }
 

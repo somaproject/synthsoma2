@@ -9,6 +9,24 @@
 
 namespace synthsoma2
 {
+
+  struct runnerstats_t
+  {
+    size_t eventcycles; 
+    float eventcyclerate; 
+    size_t eventsenttotal;
+    size_t eventreceivetotal; 
+
+    runnerstats_t() :
+      eventcycles(0),
+      eventcyclerate(0.),
+      eventsenttotal(0), 
+      eventreceivetotal(0)
+    {
+    }
+    
+  };
+  
   class SynthSomaRunner
   {
     /*
@@ -24,6 +42,8 @@ namespace synthsoma2
     
     void worker(const boost::system::error_code&); 
     
+    runnerstats_t getStats(); 
+    
   private:
     bool running_; 
     void setup();
@@ -35,9 +55,21 @@ namespace synthsoma2
     boost::asio::deadline_timer timer_; 
     boost::thread * pThread_; 
     void timer_arm(); 
+
+
+    boost::asio::deadline_timer benchtimer_; 
+    void bench_timer_arm(); 
+    void benchmark(const boost::system::error_code&); 
     
     boost::posix_time::ptime lastinvoke_; 
 
+    boost::posix_time::ptime lastbench_; 
+    size_t bencheventcnt_; 
+
+    runnerstats_t runnerstats_; 
+    boost::mutex runnerstatsmutex_; 
+    
+    
   }; 
 
 

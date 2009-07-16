@@ -47,6 +47,10 @@ namespace synthsoma2
     void addEvents(sn::eventsource_t src, const  eventtxlist_t & et); 
     const eventlist_t gatherEvents(sn::eventsource_t src); 
     
+    typedef boost::array<size_t, MAXEVENT> routestats_t; 
+
+    std::pair<size_t, size_t> getTotalCounts(); // NOT THREAD SAFE
+
   private:
     
     std::bitset<MAXEVENT> eventsEnabled_; 
@@ -63,6 +67,12 @@ namespace synthsoma2
     typedef std::list<sn::Event_t> outputbuffer_t; 
     static const size_t OUTPUTBUFFER_WARN = 1000;
     boost::ptr_vector<outputbuffer_t> outputbuffers_; 
+
+    routestats_t eventSendCount_; 
+    routestats_t eventReceiveCount_; 
+
+    size_t eventSendCountTotal_; 
+    size_t eventReceiveCountTotal_; 
     
   }; 
 

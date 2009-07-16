@@ -129,7 +129,6 @@ namespace synthsoma2
       pReTxBuffer_->save(seq_, buf); 
     }
 
-    
     // cleanup
     seq_++; 
     pendingEventList_.clear(); 

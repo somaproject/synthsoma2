@@ -25,6 +25,18 @@ namespace synthsoma2
     
   }
   
+  void TestDevice::run() 
+  {
+
+
+  }
+
+  void TestDevice::shutdown() 
+  {
+
+
+  }
+
 
   eventtxlist_t TestDevice::getTXEvents() {
     // FIXME: we have got to do something about this double-copying. 

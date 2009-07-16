@@ -11,7 +11,7 @@ set(synthsoma2_SRCS
   eventbus.cc
   databus.cc
   syntheticsoma.cc
-
+  testutil.cc
 )
 
 ADD_LIBRARY(synthsoma2_test

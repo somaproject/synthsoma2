@@ -10,6 +10,8 @@ namespace synthsoma2
     for (int i = 0; i < MAXEVENT; i++) {
       inputbuffers_.push_back(new inputbuffer_t); 
       outputbuffers_.push_back(new outputbuffer_t); 
+      eventSendCount_[i] = 0; 
+      eventReceiveCount_[i] = 0; 
     }
   }
 
@@ -57,16 +59,26 @@ namespace synthsoma2
     
   }
   
+  std::pair<size_t, size_t> EventRouter::getTotalCounts()
+  {
+
+    return std::make_pair(eventSendCountTotal_, eventReceiveCountTotal_); 
+
+  }
 
   void EventRouter::processEventCycle() {
     if (cycleHasBeenProcessed_) {
       throw std::runtime_error("Cycle has been processed already"); 
     }
 
+    size_t sentcnt = 0; 
+    size_t receivecnt = 0; 
+
     // For each event source
     for (int i = 0; i < MAXEVENT; i++) {
       if (!inputbuffers_[i].empty()) {
-	
+	eventSendCount_[i] += 1; 
+	sentcnt++; 
 	// if there are pending events, then get them
 	// and transfer to output queue
 	
@@ -76,6 +88,8 @@ namespace synthsoma2
 	for (int tgti = 0; tgti < sn::ADDRBITS; tgti++) {
 	  if (e.destaddr[tgti]) {
 	    if (eventsEnabled_[tgti]) {
+	      eventReceiveCount_[tgti] += 1; 
+	      receivecnt++; 
 	      outputbuffers_[tgti].push_back(e.event); 
 	    }
 	  }
@@ -85,7 +99,10 @@ namespace synthsoma2
       }
       
     }
-    
+
+    eventSendCountTotal_ += sentcnt; 
+    eventReceiveCountTotal_ += receivecnt; 
+
   }
   
   void EventRouter::addEvent(sn::eventsource_t src, sn::EventTX_t et)

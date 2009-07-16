@@ -26,7 +26,6 @@ namespace synthsoma2
 
   void NetEventServer::run()
   {
-    
     pNetEventSender_->run(); 
     
   }

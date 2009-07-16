@@ -9,7 +9,12 @@ namespace synthsoma2
       socket_(service), 
       endpoint_(sockname.string())
     {
+
       socket_.open();
+
+      boost::asio::socket_base::non_blocking_io command(true);
+      socket_.io_control(command);
+
     }
     
     LocalDatagram::~LocalDatagram()

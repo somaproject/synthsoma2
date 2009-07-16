@@ -13,6 +13,8 @@
 #include <sys/socket.h>
 #include "testutil.h"
 
+namespace synthsoma2 { 
+
 bf::path createTempDir()
 {
   char tempdir[] = "/tmp/testXXXXXX"; 
@@ -110,5 +112,7 @@ bool equal(const somanetwork::Event_t & e1, const somanetwork::Event_t & e2)
   return true; 
 
 
+
+}
 
 }

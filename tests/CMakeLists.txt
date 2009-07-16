@@ -31,11 +31,19 @@ add_executable(neteventsender_test
   neteventsender_test.cc
 )
 
+add_executable(eventbus_test
+  runner.cc
+  testutil.cc
+  eventbus_test.cc
+)
+
+
 set(testlist 
   simple_test
   eventrouter_test
   tsretxbuffer_test
   neteventsender_test
+  eventbus_test
   runtest
 )
 

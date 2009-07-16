@@ -7,7 +7,7 @@
 namespace synthsoma2
 {
 
-  class Timer : IEventDevice, 
+  class Timer : public IEventDevice, 
 		boost::noncopyable
   {
     typedef uint64_t timestamp_t; 

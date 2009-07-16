@@ -19,6 +19,8 @@
 
 namespace bf = boost::filesystem; 
 
+namespace synthsoma2 {
+
 bf::path createTempDir(); 
 int createBoundDomainSocket(bf::path srcpath); 
 somanetwork::EventTX_t createCanonicalEventTX(somanetwork::eventsource_t src, somanetwork::eventcmd_t cmd, 
@@ -31,4 +33,12 @@ somanetwork::Event_t createCanonicalEvent(somanetwork::eventsource_t src, somane
 
 
 bool equal(const somanetwork::Event_t & e1, const somanetwork::Event_t & e2);
+}
+
+
+
+
+
+
+
 #endif 
