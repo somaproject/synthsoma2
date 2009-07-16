@@ -3,6 +3,8 @@
 
 #include <synthsoma2/types.h>
 #include <synthsoma2/eventdevice.h> 
+#include <boost/python.hpp>
+
 #include <boost/thread/mutex.hpp>
 
 namespace synthsoma2
@@ -29,6 +31,9 @@ namespace synthsoma2
     void debugSendTXEvents(const sn::EventTX_t & ); 
     eventlist_t debugGetReceivedEvents(); 
 
+    boost::python::list pyGetReceivedEvents(); 
+    void pySendTXEvents(const sn::EventTX_t & ); 
+    
   private:
     eventtxlist_t outboundevents_; 
     eventlist_t inboundevents_; 

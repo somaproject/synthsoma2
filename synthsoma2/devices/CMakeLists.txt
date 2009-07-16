@@ -11,19 +11,25 @@ ADD_LIBRARY(synthsoma2_devices_test
   ${devices_SRCS}
 )
 
+
 ADD_LIBRARY(devices SHARED
   ${devices_SRCS}
-  pydevices.cc
+
 )
+
+# ADD_LIBRARY(devices SHARED
+#   ${devices_SRCS}
+#   pydevices.cc
+# )
 
 target_link_libraries(synthsoma2_devices_test
   ${Boost_LIBRARIES} ${SOMADEPS_LIBRARIES})
 
-target_link_libraries(devices
-  ${Boost_LIBRARIES} 
-  ${SOMADEPS_LIBRARIES}
-  ${PYTHON_LIBRARY}
-)
+# target_link_libraries(devices
+#   ${Boost_LIBRARIES} 
+#   ${SOMADEPS_LIBRARIES}
+#   ${PYTHON_LIBRARY}
+# )
 
 
-set_target_properties(devices PROPERTIES PREFIX "")
+# set_target_properties(devices PROPERTIES PREFIX "")

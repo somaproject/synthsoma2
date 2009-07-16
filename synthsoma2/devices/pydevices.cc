@@ -15,8 +15,17 @@ using namespace boost::python;
 
 BOOST_PYTHON_MODULE(devices)
 {
-  
 
+  using namespace synthsoma2; 
+  class_<sn::EventTX_t>("EventTX"); 
+
+  class_<sn::Event_t>("Event"); 
+  
+//   class_<TestDevice, bases<IEventDevice>, pTestDevice_t, 
+//     boost::noncopyable>
+//   ("TestDevice")
+//   .def("sendTXEvents", &TestDevice::debugSendTXEvents)
+//   .def("getEvents()", &TestDevice::debugGetReceivedEvents);
 
 }
 

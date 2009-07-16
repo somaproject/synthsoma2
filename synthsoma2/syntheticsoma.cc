@@ -4,7 +4,7 @@ namespace synthsoma2
 {
   using namespace boost::posix_time;
   
-  SynthSomaRunner::SynthSomaRunner(pEventBus_t eb, pDataBus_t db):
+  SynthSomaRunner::SynthSomaRunner(pEventBus_t & eb, pDataBus_t & db):
     pEventBus_(eb), 
     pDataBus_(db), 
     running_(false), 

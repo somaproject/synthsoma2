@@ -31,7 +31,7 @@ namespace synthsoma2
 
     void eventcycle(); 
     std::pair<size_t, size_t> getTotalCounts(); 
-
+    
   private:
     
 

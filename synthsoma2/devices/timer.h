@@ -34,7 +34,7 @@ namespace synthsoma2
     const static sn::eventcmd_t TIMECMD = 0x10; 
 
   }; 
-
+  typedef boost::shared_ptr<Timer> pTimer_t; 
   
 }
 

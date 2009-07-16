@@ -42,6 +42,7 @@ target_link_libraries(synthsoma2_test
 
 
 target_link_libraries(pysynthsoma2
+  devices
   ${Boost_LIBRARIES} 
   ${SOMADEPS_LIBRARIES}
   ${PYTHON_LIBRARY}

@@ -36,7 +36,7 @@ namespace synthsoma2
       
     */ 
   public:
-    SynthSomaRunner(pEventBus_t, pDataBus_t); 
+    SynthSomaRunner(pEventBus_t &, pDataBus_t &); 
     void run();     
     void shutdown(); 
     

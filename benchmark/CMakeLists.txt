@@ -6,6 +6,9 @@ link_directories(
   ${SOMADEPS_LIBRARY_DIRS}
 )
 
+include(FindPythonLibs)
+include_directories(${PYTHON_INCLUDE_PATH})
+
 add_executable(asioudp
   asioudp.cc
 )
@@ -30,6 +33,7 @@ target_link_libraries(asioudp
   
   ${Boost_LIBRARIES} 
   ${SOMADEPS_LIBRARIES}
+    ${PYTHON_LIBRARY}
   
   )
 
@@ -37,12 +41,16 @@ target_link_libraries(asioudp
 target_link_libraries(pipeserver
   ${Boost_LIBRARIES} 
   ${SOMADEPS_LIBRARIES}
+    ${PYTHON_LIBRARY}
+
   )
 
 
 target_link_libraries(blocking_udp
   ${Boost_LIBRARIES} 
   ${SOMADEPS_LIBRARIES}
+    ${PYTHON_LIBRARY}
+
   )
 
 
@@ -50,6 +58,8 @@ target_link_libraries(blocking_udp
 target_link_libraries(async_udp_server
   ${Boost_LIBRARIES} 
   ${SOMADEPS_LIBRARIES}
+    ${PYTHON_LIBRARY}
+
   )
 
 
@@ -57,4 +67,6 @@ target_link_libraries(simplesynthsoma
   synthsoma2_test
   ${Boost_LIBRARIES} 
   ${SOMADEPS_LIBRARIES}
+  ${PYTHON_LIBRARY}
+
   )
