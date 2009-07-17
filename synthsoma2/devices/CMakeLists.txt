@@ -4,7 +4,7 @@ include_directories(${SOMADEPS_INCLUDE_DIRS})
 set(devices_SRCS
   timer.cc
   testdevice.cc
-
+  simpletspike.cc
 )
 
 ADD_LIBRARY(synthsoma2_devices_test

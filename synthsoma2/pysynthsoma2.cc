@@ -43,13 +43,17 @@ BOOST_PYTHON_MODULE(pysynthsoma2)
     .def_readonly("eventsenttotal", &runnerstats_t::eventsenttotal)
     .def_readonly("eventreceivetotal", &runnerstats_t::eventreceivetotal); 
   
-  class_<EventBus::devicemap_t>("devicemap")
+  class_<EventBus::devicemap_t>("EventDeviceMap")
     .def(map_indexing_suite<EventBus::devicemap_t>());
+
+  class_<DataBus::devicemap_t>("DataDeviceMap")
+    .def(map_indexing_suite<DataBus::devicemap_t>());
 
   
   class_<EventBus, boost::noncopyable, pEventBus_t>("EventBus", 
 						    init<EventBus::devicemap_t>()); 
-  class_<DataBus, boost::noncopyable, pDataBus_t>("DataBus"); 
+  class_<DataBus, boost::noncopyable, pDataBus_t>("DataBus",
+						  init<DataBus::devicemap_t>()); 
   
   class_<SynthSomaRunner, boost::noncopyable>("Runner", 
 					      init<pEventBus_t &, pDataBus_t&>())

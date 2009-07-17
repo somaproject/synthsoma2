@@ -1,4 +1,6 @@
 #include "asioutil.h"
+#include <boost/format.hpp>
+#include <synthsoma2/netdataserver.h>
 
 namespace synthsoma2 
 {
@@ -55,6 +57,62 @@ namespace synthsoma2
     }
 
 
+    /*-------------------------------------------------------------------
+      Data Datagram Proxies
+      ------------------------------------------------------------------*/
+
+    
+    LocalDataDatagram::LocalDataDatagram(io_service & service, 
+					 boost::filesystem::path sockdir) :
+      socket_(service)
+    {
+      /* 
+	 Create all possible endpoints
+
+       */ 
+      boost::filesystem::path database = sockdir / "data";
+      for(sn::datasource_t src = 0; src < 64; src++) {
+	std::string tspike = (database / "tspike" / 
+			      boost::str(boost::format("%d") % (int)src)).string(); 
+	// FIXME : Need the rest of the sources
+	endpointmap_[std::make_pair(src, sn::TSPIKE)] 
+	= local::datagram_protocol::endpoint(tspike); 
+	
+      }
+
+
+      socket_.open();
+
+      boost::asio::socket_base::non_blocking_io command(true);
+      socket_.io_control(command);
+ 
+     
+    }
+    
+    LocalDataDatagram::~LocalDataDatagram()
+    {
+
+    }
+    
+    void LocalDataDatagram::send(DataBuffer * db) {
+
+      endpointmap_t::iterator iep = endpointmap_.find(std::make_pair(db->src, db->typ)); 
+      
+      if (iep != endpointmap_.end()) {
+
+ 	try { 
+	  socket_.send_to(buffer(db->getPtr(), db->getLen()), 
+			   iep->second); 
+	} catch (std::exception & e) {
+	  // Really? we have to do this to avoid WAS_WOULDBLOCK? 
+	  // but don't we want this thread to be able to block if it has to? 
+	  // FIXME
+	  // IRC Confirms
+	}
+	
+      }
+    }
+    
   }
 
 }

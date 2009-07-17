@@ -18,6 +18,9 @@ set(synthsoma2_SRCS
   databus.cc
   syntheticsoma.cc
   testutil.cc
+  netdataserver.cc
+  netdatasender.cc
+  datasequenceproto.cc
 )
 
 ADD_LIBRARY(synthsoma2_test

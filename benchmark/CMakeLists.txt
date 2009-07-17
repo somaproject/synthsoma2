@@ -25,9 +25,9 @@ add_executable(async_udp_server
   async_udp_server.cc
 )
 
-add_executable(simplesynthsoma
-  simplesynthsoma
-)
+# add_executable(simplesynthsoma
+#   simplesynthsoma.cc
+# )
 
 target_link_libraries(asioudp
   
@@ -63,10 +63,10 @@ target_link_libraries(async_udp_server
   )
 
 
-target_link_libraries(simplesynthsoma
-  synthsoma2_test
-  ${Boost_LIBRARIES} 
-  ${SOMADEPS_LIBRARIES}
-  ${PYTHON_LIBRARY}
+# target_link_libraries(simplesynthsoma
+#   synthsoma2_test
+#   ${Boost_LIBRARIES} 
+#   ${SOMADEPS_LIBRARIES}
+#   ${PYTHON_LIBRARY}
 
-  )
+#   )

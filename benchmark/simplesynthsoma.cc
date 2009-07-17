@@ -56,7 +56,8 @@ int main(int argc, char* argv[])
 
   pEventBus_t eb(new EventBus(dm)); 
   
-  pDataBus_t db(new DataBus()); 
+  DataBus::devicemap_t ddm; 
+  pDataBus_t db(new DataBus(ddm)); 
   
   SynthSomaRunner ssr(eb, db); 
   ssr.run(); 

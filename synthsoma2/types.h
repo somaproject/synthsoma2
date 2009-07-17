@@ -3,6 +3,7 @@
 
 #include <somanetwork/event.h>
 #include <somanetwork/eventtx.h>
+#include <somanetwork/datapacket.h>
 #include <boost/utility.hpp> 
 #include <boost/shared_ptr.hpp>
 #include <boost/asio.hpp>
@@ -32,6 +33,17 @@ namespace synthsoma2
   
   class DataBus;
   typedef boost::shared_ptr<DataBus> pDataBus_t; 
+
+  class NetDataServer;
+  typedef boost::shared_ptr<NetDataServer> pNetDataServer_t; 
+
+  class IDataDevice; 
+  typedef boost::shared_ptr<IDataDevice>  pDataDevice_t; 
+
+  class DataBuffer; 
+
+  class NetDataSender;
+  typedef boost::shared_ptr<NetDataSender> pNetDataSender_t; 
 
 }
 
