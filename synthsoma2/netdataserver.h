@@ -38,7 +38,7 @@ namespace synthsoma2 {
     */ 
   public:
     static pNetDataServer_t createDomain(boost::filesystem::path root); 
-    static pNetDataServer_t createINet(); 
+    static pNetDataServer_t createINet(std::string destip); 
     
     NetDataServer(pNetDataSender_t & nds); 
     void sendData(DataBuffer *); 

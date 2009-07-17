@@ -20,7 +20,7 @@ namespace synthsoma2
 
   public:
     static pNetDataSender_t createDomain(boost::filesystem::path root); 
-    static pNetDataSender_t createINet(); 
+    static pNetDataSender_t createINet(std::string destip); 
     
     void run(); 
     void shutdown(); 

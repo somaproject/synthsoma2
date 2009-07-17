@@ -12,9 +12,12 @@ namespace synthsoma2
   }
 
   
-  pNetDataSender_t NetDataSender::createINet()
+  pNetDataSender_t NetDataSender::createINet(std::string destIP)
   {
+    pio_service_t ios(new boost::asio::io_service);
 
+    senderproxy::pDataDatagram_t dg(new senderproxy::INetDataDatagram(*ios, destIP)); 
+    return pNetDataSender_t(new NetDataSender(ios, dg)); 
 
   }
 

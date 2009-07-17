@@ -30,22 +30,24 @@ def test():
         
     edm[4] = ne1
 
-    simplets = pysynthsoma2.SimpleTSpike()
-    
-    # create the tspikes device
-    for j in range(10):
-        ts = pysynthsoma2.TSpike()
-        ts.src = 0;
-        ts.time = 5000 * (j+1);
-        ts.x.wave = [1000 * j * i for i in range(32)]
-        ts.y.wave = [1000 * j * i for i in range(32)]
-        ts.a.wave = [1000 * j * i for i in range(32)]
-        ts.b.wave = [1000 * j * i for i in range(32)]
-    
+    TSPIKESOURCE_N = 4
+    for src in range(TSPIKESOURCE_N):
+        simplets = pysynthsoma2.SimpleTSpike()
 
-        simplets.addTSpike(ts)
-    edm[8] = simplets
-    ddm[0] = simplets
+        # create the tspikes device
+        for j in range(10):
+            ts = pysynthsoma2.TSpike()
+            ts.src = 0;
+            ts.time = 5000 * (j+1);
+            ts.x.wave = [1000 * j * i for i in range(32)]
+            ts.y.wave = [1000 * j * i for i in range(32)]
+            ts.a.wave = [1000 * j * i for i in range(32)]
+            ts.b.wave = [1000 * j * i for i in range(32)]
+
+
+            simplets.addTSpike(ts)
+        edm[8 + src] = simplets
+        ddm[0 + src] = simplets
 
     event_bus = pysynthsoma2.EventBus(edm)
     data_bus = pysynthsoma2.DataBus(ddm)

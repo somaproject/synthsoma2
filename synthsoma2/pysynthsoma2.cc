@@ -114,7 +114,8 @@ BOOST_PYTHON_MODULE(pysynthsoma2)
   
   class_<NetDataServer, boost::noncopyable, pNetDataServer_t, bases<IDataSink> >
     ("NetDataServer", no_init)
-    .def("createDomain", &dataCreateDomain).staticmethod("createDomain"); 
+    .def("createDomain", &dataCreateDomain).staticmethod("createDomain") 
+    .def("createINet", &NetDataServer::createINet).staticmethod("createINet"); 
   
   
   /* -----------------------------------------------------------------------

@@ -19,9 +19,11 @@ namespace synthsoma2
     
   }
 
-  pNetDataServer_t NetDataServer::createINet() 
+  pNetDataServer_t NetDataServer::createINet(std::string destip) 
   {
-    // FIXME we want internet, right? 
+    pNetDataSender_t nds = NetDataSender::createINet(destip); 
+    
+    return pNetDataServer_t(new NetDataServer(nds)); 
 
   }
     
