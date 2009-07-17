@@ -37,6 +37,8 @@ namespace synthsoma2
     boost::mutex mutex_;
     int eventToSend_; 
 
+    somatime_t somatime_; 
+
   }; 
 
   typedef boost::shared_ptr<SimpleTSpike> pSimpleTSpike_t; 

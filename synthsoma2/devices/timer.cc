@@ -45,12 +45,12 @@ namespace synthsoma2
     
     oute.event.src = src_; 
     oute.event.cmd = TIMECMD; 
-    oute.event.data[0] = (ts_ >> 48) & 0xFFFF; 
-    oute.event.data[1] = (ts_ >> 32) & 0xFFFF; 
-    oute.event.data[2] = (ts_ >> 16) & 0xFFFF; 
-    oute.event.data[3] = (ts_ >> 0) & 0xFFFF; 
+    oute.event.data[0] = (ts_ >> 32) & 0xFFFF; 
+    oute.event.data[1] = (ts_ >> 16) & 0xFFFF; 
+    oute.event.data[2] = (ts_ >> 0) & 0xFFFF; 
     outboundevents_.push_back(oute); 
     
+    ts_++; 
   }
   
 

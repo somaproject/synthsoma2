@@ -19,7 +19,9 @@ namespace synthsoma2
   typedef uint64_t ecyclecnt_t; 
   typedef std::list<sn::EventTX_t> eventtxlist_t; 
   typedef sn::EventList_t eventlist_t; 
-
+  
+  typedef uint64_t somatime_t; 
+  
   class NetEventSender; 
 
   typedef boost::shared_ptr<boost::asio::io_service> pio_service_t; 
