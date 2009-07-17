@@ -148,7 +148,8 @@ BOOST_PYTHON_MODULE(pysynthsoma2)
    
    class_<NetEventServer, bases<IEventDevice>, pNetEventServer_t, boost::noncopyable>
    ("NetEventServer", no_init)
-     .def("createDomain", &eventCreateDomain).staticmethod("createDomain"); 
+     .def("createDomain", &eventCreateDomain).staticmethod("createDomain")
+     .def("createINet", &NetEventServer::createINet).staticmethod("createINet"); 
 
    class_<SimpleTSpike, bases<IEventDevice, IDataDevice>, 
     pSimpleTSpike_t, boost::noncopyable>("SimpleTSpike")

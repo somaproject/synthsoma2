@@ -18,10 +18,10 @@ namespace synthsoma2
     
   }
 
-  pNetEventSender_t NetEventSender::createINet()
+  pNetEventSender_t NetEventSender::createINet(std::string ip)
   {
     pio_service_t ios(new boost::asio::io_service());
-    std::string ip("127.0.0.1"); 
+
     senderproxy::pDatagram_t  sp(new senderproxy::INetDatagram(*ios, ip, sn::EVENTRXPORT)); 
     
     return pNetEventSender_t(new NetEventSender(ios, sp)); 

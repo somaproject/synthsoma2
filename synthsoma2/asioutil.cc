@@ -38,11 +38,14 @@ namespace synthsoma2
 
     INetDatagram::INetDatagram(io_service & service, 
 			       std::string ip, uint16_t destport) : 
-      socket_(service), 
+      socket_(service, ip::udp::endpoint(ip::udp::v4(), 0)), 
       endpoint_(ip::address_v4::from_string(ip), destport)
     {
-      /// set up the endpoint
-      //socket_.open(); 
+
+
+      // set as broadcast 
+      boost::asio::socket_base::broadcast option(true);
+      socket_.set_option(option);
     }
 
     INetDatagram::~INetDatagram()
@@ -74,9 +77,21 @@ namespace synthsoma2
       for(sn::datasource_t src = 0; src < 64; src++) {
 	std::string tspike = (database / "tspike" / 
 			      boost::str(boost::format("%d") % (int)src)).string(); 
-	// FIXME : Need the rest of the sources
+	
 	endpointmap_[std::make_pair(src, sn::TSPIKE)] 
-	= local::datagram_protocol::endpoint(tspike); 
+	  = local::datagram_protocol::endpoint(tspike); 
+	
+	std::string raw = (database / "raw" / 
+			   boost::str(boost::format("%d") % (int)src)).string(); 
+	
+	endpointmap_[std::make_pair(src, sn::RAW)] 
+	  = local::datagram_protocol::endpoint(raw); 
+	
+	std::string wave = (database / "wave" / 
+			    boost::str(boost::format("%d") % (int)src)).string(); 
+	
+	endpointmap_[std::make_pair(src, sn::WAVE)] 
+	  = local::datagram_protocol::endpoint(wave); 
 	
       }
 

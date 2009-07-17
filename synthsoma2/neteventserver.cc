@@ -24,6 +24,12 @@ namespace synthsoma2
     return es; 
   }
 
+  pNetEventServer_t NetEventServer::createINet(std::string IP)
+  {
+    pNetEventServer_t es(new NetEventServer(NetEventSender::createINet(IP))); 
+    return es; 
+  }
+  
   void NetEventServer::run()
   {
     pNetEventSender_->run(); 

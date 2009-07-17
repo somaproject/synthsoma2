@@ -7,6 +7,10 @@ import tempfile
 
 def test():
 
+    useip = True
+    if useip:
+        ip = "127.0.0.1"
+        
     domaindir = tempfile.mkdtemp(prefix="soma")
     print "The domain dir = ", domaindir
     
@@ -19,7 +23,11 @@ def test():
     edm[0] = td
 
     # create the network event device
-    ne1 = pysynthsoma2.NetEventServer.createDomain(domaindir)
+    if useip:
+        ne1 = pysynthsoma2.NetEventServer.createINet(ip)
+    else:
+        ne1 = pysynthsoma2.NetEventServer.createDomain(domaindir)
+        
     edm[4] = ne1
 
     simplets = pysynthsoma2.SimpleTSpike()

@@ -22,6 +22,8 @@ int main(int argc, char* argv[])
   desc.add_options()
     ("help", "produce help message")
     ("duration", po::value<int>()->default_value(10), "duration to run (sec)")
+    ("tgt-domain-dir", po::value<string>(), "root directory for domain sockets")
+    ("tgt-ip-addr", po::value<string>(), "tgt ip address")
     ("enable-timer", "Enable EventBus Timer")
     ("enable-network", "Enable the Event and Data Network interfaces");
 		   

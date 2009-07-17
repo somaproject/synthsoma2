@@ -35,7 +35,7 @@ namespace synthsoma2
   public:
     // creation
     static pNetEventSender_t createDomain(boost::filesystem::path basedir); 
-    static pNetEventSender_t createINet(); 
+    static pNetEventSender_t createINet(std::string ip); 
     
     void setReTXBuffer(eventretxbuffer_t * b); 
 

@@ -23,7 +23,7 @@ namespace synthsoma2
   {
   public:
     // factory methods
-    static pNetEventServer_t createINet(); 
+    static pNetEventServer_t createINet(std::string ip); 
     static pNetEventServer_t createDomain(boost::filesystem::path root); 
     
     // run()
