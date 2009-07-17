@@ -117,39 +117,3 @@ def test_timer_and_net():
     assert_true(s.eventsenttotal, T * 50000 * 0.9)
     
 
-def test_timer_and_net_and_tspike():
-    dm = pysynthsoma2.EventDeviceMap()
-
-    td = pysynthsoma2.Timer()
-    dm[0] = td
-
-    
-    ne1 = pysynthsoma2.NetEventServer.createDomain("/tmp/testtwo")
-    dm[4] = ne1
-
-    simplets = pysynthsoma2.SimpleTSpike(1000)
-    dm[8] = simplets
-
-
-    nd1 = pysynthsoma2.NetDataServer.createDomain("/tmp/testtwo")
-    event_bus = pysynthsoma2.EventBus(dm)
-    
-    ddm = pysynthsoma2.DataDeviceMap()
-    data_bus = pysynthsoma2.DataBus(ddm)
-    data_bus.setDataSink(nd1)
-    
-    runner = pysynthsoma2.Runner(event_bus, data_bus)
-    
-    runner.run()
-    T  = 5
-    for i in range(T):
-        time.sleep(1)
-        s = runner.getStats()
-        print s.eventcycles, s.eventcyclerate
-    
-        
-    runner.shutdown()
-    s = runner.getStats()
-    assert_true(s.eventcycles > 50000 * 0.9 * T)
-    assert_true(s.eventsenttotal, T * 50000 * 0.9)
-    

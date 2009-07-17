@@ -37,6 +37,7 @@ namespace synthsoma2
 
   void NetDataServer::sendData(DataBuffer * db)
   {
+
     pNetDataSender_->addDataBuffer(db); 
   }
   

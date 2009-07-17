@@ -9,6 +9,8 @@ namespace synthsoma2 {
   class IDataSink
   {
   public:
+    virtual void run() = 0; 
+    virtual void shutdown() = 0; 
 
     virtual void sendData(DataBuffer *) = 0; 
     /* Send-data transfers ownership, potentially

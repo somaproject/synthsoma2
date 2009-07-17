@@ -15,7 +15,18 @@ namespace synthsoma2 {
 
   void DataBus::run()
   {
+
+    BOOST_FOREACH(devicepair_t p, devices_)
+      {
+	p.second->setDeviceDataSrc(p.first); 
+      }
+    
+    // then start the devices
+
     running_ = true; 
+    if(datasink_) {
+      datasink_->run(); 
+    }
     pthread_ = new boost::thread(&DataBus::ecycle_triggered_thread, this); 
 
   }
@@ -29,6 +40,8 @@ namespace synthsoma2 {
 
       pthread_->join(); 
     }
+    if(datasink_) 
+      datasink_->shutdown(); 
     
   }
 
@@ -75,15 +88,23 @@ namespace synthsoma2 {
     
   }
 
-  void DataBus::newData(sn::datasource_t src, const sn::TSpike_t &)
+  void DataBus::newData(sn::datasource_t src, const sn::TSpike_t &ts)
   {
-    // FIXME, at the moment we just create empty packets
-    DataBuffer * db = new DataBuffer(); 
-    db->src = src; 
-    db->typ = sn::TSPIKE; 
-    
-    // FIXME here's where the magic happens
     if(datasink_) {
+
+      
+      DataBuffer * db = new DataBuffer(); 
+      
+      db->src = src; 
+      db->typ = sn::TSPIKE; 
+      size_t len; 
+      
+      sn::pDataPacket_t dp = sn::rawFromTSpikeForTX(ts, 0, &len); 
+      
+      memcpy(db->getFrameStartPtr(), &(dp->body[0]), len); 
+
+      db->setFrameLen(len); 
+
       datasink_->sendData(db);
     }
     

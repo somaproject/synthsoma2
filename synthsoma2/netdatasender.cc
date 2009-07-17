@@ -64,7 +64,6 @@ namespace synthsoma2
 				      size_t bytes_recvd)
   {
     // do the real work
-
        if (!error && bytes_recvd > 0)
       {
 	for (int i = 0; i < bytes_recvd; i++) {

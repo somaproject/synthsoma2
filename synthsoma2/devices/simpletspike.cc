@@ -17,6 +17,7 @@ namespace synthsoma2 {
       boost::mutex::scoped_lock lock(mutex_);
       eventToSend_++; 
     }
+
   }
 
   void SimpleTSpike::setDeviceID(sn::eventsource_t id)
@@ -31,7 +32,7 @@ namespace synthsoma2 {
 
   void SimpleTSpike::sendEvents(const eventlist_t &)
   {
-
+    // FIXME get the time stamp event 
   }
   
   void SimpleTSpike::run() 
@@ -65,8 +66,15 @@ namespace synthsoma2 {
     if(tosend) {
       sn::TSpike_t ts; 
       ts.src = dsrc_; 
+      spikenum_++; 
+      ts.x.filtid = spikenum_; 
+      ts.y.filtid = spikenum_; 
+      ts.a.filtid = spikenum_; 
+      ts.b.filtid = spikenum_; 
+
       // FIXME: add some stuff here
       db->newData(dsrc_, ts);       
+      spikenum_++; 
     }
     
   }
