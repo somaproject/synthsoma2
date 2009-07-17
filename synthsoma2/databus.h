@@ -1,6 +1,7 @@
 #ifndef __SYNTHSOMA2_DATABUS_H__
 #define __SYNTHSOMA2_DATABUS_H__
 
+#include <boost/thread/condition_variable.hpp>
 #include <synthsoma2/types.h>
 #include <synthsoma2/netdataserver.h>
 #include <somanetwork/tspike.h>
@@ -59,11 +60,11 @@ namespace synthsoma2
     typedef std::pair<sn::datasource_t, pDataDevice_t> devicepair_t;     
 
     DataBus(devicemap_t); 
-    void ecycle(ecyclecnt_t cnt); 
+    void ecycle(ecyclecnt_t cnt); // thread-safe
     
     void run(); 
     void shutdown(); 
-    void setDataSink(IDataSink * ds); 
+    void setDataSink(pDataSink_t ds); 
 
     // visitor callbacks
     void newData(sn::datasource_t src, const sn::TSpike_t &); 
@@ -72,7 +73,7 @@ namespace synthsoma2
 
   private:
     devicemap_t devices_; 
-    IDataSink * datasink_; 
+    pDataSink_t datasink_; 
 
     bool running_; 
 

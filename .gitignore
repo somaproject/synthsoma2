@@ -28,3 +28,8 @@ Makefile
 /tests/runtest
 /tests/simple_test
 /tests/tsretxbuffer_test
+/Testing/Temporary/LastTest.log
+/Testing/Temporary/LastTestsFailed.log
+/synthsoma2/Testing/Temporary/LastTest.log
+/tests/datasequenceproto_test
+/tests/netdatasender_test

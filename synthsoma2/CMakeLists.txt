@@ -2,6 +2,9 @@
 include_directories(${Boost_INCLUDE_DIRS})
 include_directories(${SOMADEPS_INCLUDE_DIRS})
 
+include(FindPythonLibs)
+include_directories(${PYTHON_INCLUDE_PATH})
+
 link_directories(
   ${Boost_LIBRARY_DIRS}
   ${SOMADEPS_LIBRARY_DIRS}
@@ -18,6 +21,7 @@ set(synthsoma2_SRCS
   databus.cc
   syntheticsoma.cc
   testutil.cc
+  databuffer.cc
   netdataserver.cc
   netdatasender.cc
   datasequenceproto.cc
@@ -33,9 +37,6 @@ ADD_LIBRARY(pysynthsoma2 SHARED
   pysynthsoma2.cc
 )
 
-include(FindPythonLibs)
-include_directories(${PYTHON_INCLUDE_PATH})
-
 
 target_link_libraries(synthsoma2_test
   synthsoma2_devices_test
@@ -46,9 +47,10 @@ target_link_libraries(synthsoma2_test
 
 target_link_libraries(pysynthsoma2
   devices
+  ${PYTHON_LIBRARY}
   ${Boost_LIBRARIES} 
   ${SOMADEPS_LIBRARIES}
-  ${PYTHON_LIBRARY}
+
 
 )
 set_target_properties(pysynthsoma2 PROPERTIES PREFIX "")

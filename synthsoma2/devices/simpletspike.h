@@ -26,7 +26,7 @@ namespace synthsoma2
 
     // Data interface
     void setDeviceDataSrc(sn::datasource_t id) ; 
-    void submitData(DataBus * db);  // visitor-like callback. 
+    void visitSubmitData(DataBus * db);  // visitor-like callback. 
 
   private:
     size_t spikenum_; 
@@ -39,6 +39,7 @@ namespace synthsoma2
 
   }; 
 
+  typedef boost::shared_ptr<SimpleTSpike> pSimpleTSpike_t; 
 
 
 }

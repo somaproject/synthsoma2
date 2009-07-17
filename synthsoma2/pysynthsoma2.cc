@@ -13,14 +13,22 @@
 #include <synthsoma2/eventbus.h>
 #include <synthsoma2/devices/testdevice.h>
 #include <synthsoma2/devices/timer.h>
+#include <synthsoma2/devices/simpletspike.h>
 #include <synthsoma2/neteventserver.h>
+#include <synthsoma2/netdataserver.h>
 
 using namespace boost::python;
 namespace bp = boost::python; 
 
-synthsoma2::pNetEventServer_t createDomain(std::string s)
+synthsoma2::pNetEventServer_t eventCreateDomain(std::string s)
 {
   return synthsoma2::NetEventServer::createDomain(s); 
+
+}
+
+synthsoma2::pNetDataServer_t dataCreateDomain(std::string s)
+{
+  return synthsoma2::NetDataServer::createDomain(s); 
 
 }
 
@@ -30,7 +38,6 @@ BOOST_PYTHON_MODULE(pysynthsoma2)
 
   /* -----------------------------------------------------------------------
      Utility
-
      ------------------------------------------------------------------------*/
 
   class_<sn::EventTX_t>("EventTX"); 
@@ -42,6 +49,12 @@ BOOST_PYTHON_MODULE(pysynthsoma2)
     .def_readonly("eventcyclerate", &runnerstats_t::eventcyclerate)
     .def_readonly("eventsenttotal", &runnerstats_t::eventsenttotal)
     .def_readonly("eventreceivetotal", &runnerstats_t::eventreceivetotal); 
+
+
+  /* -----------------------------------------------------------------------
+     Core Busses
+     ------------------------------------------------------------------------*/
+
   
   class_<EventBus::devicemap_t>("EventDeviceMap")
     .def(map_indexing_suite<EventBus::devicemap_t>());
@@ -53,8 +66,21 @@ BOOST_PYTHON_MODULE(pysynthsoma2)
   class_<EventBus, boost::noncopyable, pEventBus_t>("EventBus", 
 						    init<EventBus::devicemap_t>()); 
   class_<DataBus, boost::noncopyable, pDataBus_t>("DataBus",
-						  init<DataBus::devicemap_t>()); 
+						  init<DataBus::devicemap_t>())
+    .def("setDataSink", &DataBus::setDataSink); 
   
+  class_<IDataSink, boost::noncopyable, pDataSink_t>("DataSink", 
+						     no_init); 
+  
+  class_<NetDataServer, boost::noncopyable, pNetDataServer_t, bases<IDataSink> >
+    ("NetDataServer", no_init)
+    .def("createDomain", &dataCreateDomain).staticmethod("createDomain"); 
+  
+  
+  /* -----------------------------------------------------------------------
+     Utility
+     ------------------------------------------------------------------------*/
+
   class_<SynthSomaRunner, boost::noncopyable>("Runner", 
 					      init<pEventBus_t &, pDataBus_t&>())
     .def("run", &SynthSomaRunner::run)
@@ -64,9 +90,9 @@ BOOST_PYTHON_MODULE(pysynthsoma2)
 
   /* -----------------------------------------------------------------------
      DEVICES 
-
      ------------------------------------------------------------------------*/
   class_<IEventDevice, boost::noncopyable>("EventDevice", no_init); 
+  class_<IDataDevice, boost::noncopyable>("DataDevice", no_init); 
   
   // Text Device
   class_<TestDevice, bases<IEventDevice>, pTestDevice_t, 
@@ -82,7 +108,9 @@ BOOST_PYTHON_MODULE(pysynthsoma2)
    
    class_<NetEventServer, bases<IEventDevice>, pNetEventServer_t, boost::noncopyable>
    ("NetEventServer", no_init)
-     .def("createDomain", &createDomain).staticmethod("createDomain"); 
+     .def("createDomain", &eventCreateDomain).staticmethod("createDomain"); 
 
-   
+   class_<SimpleTSpike, bases<IEventDevice, IDataDevice>, 
+    pSimpleTSpike_t, boost::noncopyable>("SimpleTSpike", init<size_t>()); 
+
 }

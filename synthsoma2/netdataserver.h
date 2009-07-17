@@ -2,27 +2,10 @@
 #define __SYNTHSOMA2_NETDATASERVER_H__
 
 #include <synthsoma2/types.h>
+#include <synthsoma2/databuffer.h>
 
 namespace synthsoma2 {
-  
-  class DataBuffer {
-  public:
-    static const size_t BUFSIZEMAX = 1300; 
-    DataBuffer(); 
-    sn::datasource_t src; 
-    sn::datatype_t typ; 
-    char * getPtr(); 
-    char * getFrameStartPtr(); 
-    void setFrameLen(size_t); 
-    size_t getLen(); 
 
-  private:
-
-    boost::array<char, BUFSIZEMAX> data_; 
-    size_t totallen; 
-    
-  }; 
-  
   class IDataSink
   {
   public:
@@ -40,6 +23,8 @@ namespace synthsoma2 {
        
   }; 
   
+  typedef boost::shared_ptr<IDataSink> pDataSink_t ; 
+
   class NetDataServer : public IDataSink, 
 		        boost::noncopyable
 		       
@@ -50,20 +35,26 @@ namespace synthsoma2 {
 
     */ 
   public:
-    pNetDataServer_t createDomain(boost::filesystem::path root); 
-    pNetDataServer_t createINet(); 
+    static pNetDataServer_t createDomain(boost::filesystem::path root); 
+    static pNetDataServer_t createINet(); 
     
-    NetDataServer(); 
+    NetDataServer(pNetDataSender_t & nds); 
     void sendData(DataBuffer *); 
     //void setReTx();  FIXME retx buffer
+
+    void run(); 
+    void shutdown(); 
+
 
   private:
     typedef std::list<DataBuffer *> dataqueue_t; 
     dataqueue_t dataqueue_; 
-    boost::mutex dataqueuemutex_; 
+
+    pNetDataSender_t pNetDataSender_; 
 
   }; 
-    
+  
+  typedef boost::shared_ptr<NetDataServer> pNetDataServer_t; 
 }
 
 #endif

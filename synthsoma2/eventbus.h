@@ -32,6 +32,10 @@ namespace synthsoma2
     void eventcycle(); 
     std::pair<size_t, size_t> getTotalCounts(); 
     
+    EventRouter::ecyclesig_t &  eventCycleSignal() {
+      return router_->eventCycleSignal(); 
+    }
+    
   private:
     
 

@@ -19,11 +19,12 @@ def test_testdevice():
     assert_equal(s, [])
 
 def test_databus():
+    dm = pysynthsoma2.DataDeviceMap()
 
-    db = pysynthsoma2.DataBus()
+    db = pysynthsoma2.DataBus(dm)
 
 def test_eventbus():
-    dm = pysynthsoma2.devicemap()
+    dm = pysynthsoma2.EventDeviceMap()
 
     td = pysynthsoma2.TestDevice()
     dm[2] = td
@@ -31,15 +32,30 @@ def test_eventbus():
     eb = pysynthsoma2.EventBus(dm)
     
 
+def test_startandshutdown():
+    edm = pysynthsoma2.EventDeviceMap()
+
+    event_bus = pysynthsoma2.EventBus(edm)
+
+    ddm = pysynthsoma2.DataDeviceMap()
+    data_bus = pysynthsoma2.DataBus(ddm)
+
+    runner = pysynthsoma2.Runner(event_bus, data_bus)
+    
+    runner.run()
+    runner.shutdown()
+
+
 def test_synthsoma():
-    dm = pysynthsoma2.devicemap()
+    edm = pysynthsoma2.EventDeviceMap()
 
     td = pysynthsoma2.TestDevice()
-    dm[2] = td
+    edm[2] = td
 
-    event_bus = pysynthsoma2.EventBus(dm)
-    
-    data_bus = pysynthsoma2.DataBus()
+    event_bus = pysynthsoma2.EventBus(edm)
+
+    ddm = pysynthsoma2.DataDeviceMap()
+    data_bus = pysynthsoma2.DataBus(ddm)
 
     runner = pysynthsoma2.Runner(event_bus, data_bus)
     
@@ -51,14 +67,15 @@ def test_synthsoma():
     assert_true(s.eventcycles > 50000 * 0.9 * T)
 
 def test_timer():
-    dm = pysynthsoma2.devicemap()
+    dm = pysynthsoma2.EventDeviceMap()
 
     td = pysynthsoma2.Timer()
     dm[0] = td
 
     event_bus = pysynthsoma2.EventBus(dm)
     
-    data_bus = pysynthsoma2.DataBus()
+    ddm = pysynthsoma2.DataDeviceMap()
+    data_bus = pysynthsoma2.DataBus(ddm)
 
     runner = pysynthsoma2.Runner(event_bus, data_bus)
     
@@ -71,7 +88,7 @@ def test_timer():
     assert_true(s.eventsenttotal, T * 50000 * 0.9)
     
 def test_timer_and_net():
-    dm = pysynthsoma2.devicemap()
+    dm = pysynthsoma2.EventDeviceMap()
 
     td = pysynthsoma2.Timer()
     dm[0] = td
@@ -81,8 +98,46 @@ def test_timer_and_net():
 
     event_bus = pysynthsoma2.EventBus(dm)
     
-    data_bus = pysynthsoma2.DataBus()
+    ddm = pysynthsoma2.DataDeviceMap()
+    data_bus = pysynthsoma2.DataBus(ddm)
 
+    runner = pysynthsoma2.Runner(event_bus, data_bus)
+    
+    runner.run()
+    T  = 5
+    for i in range(T):
+        time.sleep(1)
+        s = runner.getStats()
+        print s.eventcycles, s.eventcyclerate
+    
+        
+    runner.shutdown()
+    s = runner.getStats()
+    assert_true(s.eventcycles > 50000 * 0.9 * T)
+    assert_true(s.eventsenttotal, T * 50000 * 0.9)
+    
+
+def test_timer_and_net_and_tspike():
+    dm = pysynthsoma2.EventDeviceMap()
+
+    td = pysynthsoma2.Timer()
+    dm[0] = td
+
+    
+    ne1 = pysynthsoma2.NetEventServer.createDomain("/tmp/testtwo")
+    dm[4] = ne1
+
+    simplets = pysynthsoma2.SimpleTSpike(1000)
+    dm[8] = simplets
+
+
+    nd1 = pysynthsoma2.NetDataServer.createDomain("/tmp/testtwo")
+    event_bus = pysynthsoma2.EventBus(dm)
+    
+    ddm = pysynthsoma2.DataDeviceMap()
+    data_bus = pysynthsoma2.DataBus(ddm)
+    data_bus.setDataSink(nd1)
+    
     runner = pysynthsoma2.Runner(event_bus, data_bus)
     
     runner.run()

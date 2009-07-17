@@ -5,7 +5,6 @@
 namespace synthsoma2 { 
   DataBus::DataBus(devicemap_t dm) :
     devices_(dm), 
-    datasink_(NULL), 
     running_(false), 
     newevent_(false), 
     pthread_(NULL)
@@ -25,12 +24,15 @@ namespace synthsoma2 {
   {
     running_ = false; 
     
-    if(pthread_) 
+    if(pthread_) {
+      cond_.notify_one();
+
       pthread_->join(); 
+    }
     
   }
 
-  void DataBus::setDataSink(IDataSink * s)
+  void DataBus::setDataSink(pDataSink_t ds)
   {
     if(running_)
       throw std::runtime_error("Running, can't set data sink"); 
@@ -38,7 +40,7 @@ namespace synthsoma2 {
     if(datasink_)
       throw std::runtime_error("Data sink already set"); 
 
-    datasink_ = s;
+    datasink_ = ds;
     
   }
   
@@ -57,7 +59,7 @@ namespace synthsoma2 {
       // wait for condition variable (OR TIMEOUT?)
       boost::unique_lock<boost::mutex> lock(mutex_); 
       
-      while(!newevent_) 
+      while(!newevent_ and running_) 
 	{
 	  cond_.wait(lock); 
 	}

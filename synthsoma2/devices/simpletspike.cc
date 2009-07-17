@@ -51,7 +51,7 @@ namespace synthsoma2 {
 
   }
 
-  void SimpleTSpike::submitData(DataBus * db)
+  void SimpleTSpike::visitSubmitData(DataBus * db)
   {
     bool tosend = false; 
     {

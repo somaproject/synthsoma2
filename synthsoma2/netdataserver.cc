@@ -1,42 +1,35 @@
 #include <synthsoma2/netdataserver.h>
+#include <synthsoma2/netdatasender.h>
 
 namespace synthsoma2
 {
   
-  DataBuffer::DataBuffer() :
-    src(0), 
-    typ(sn::TSPIKE), 
-    totallen(0)
-  {
-    
-  }
-
-  char * DataBuffer::getFrameStartPtr()
-  {
-    return &data_[0] + sizeof(sn::sequence_t); 
-  }
-
-  char * DataBuffer::getPtr()
-  {
-    return &(data_[0]); 
-  }
-
-  void DataBuffer::setFrameLen(size_t len)
-  {
-    totallen = len + sizeof(sn::sequence_t); 
-    
-  }
-
-  size_t DataBuffer::getLen()
-  {
-    return totallen; 
-  }
   
   
   /* ------------------------------------------------------------------------
      NET DATA SERVER 
    ------------------------------------------------------------------------- */
-  NetDataServer::NetDataServer()
+
+  
+  pNetDataServer_t NetDataServer::createDomain(boost::filesystem::path root)
+  {
+    pNetDataSender_t nds = NetDataSender::createDomain(root); 
+    
+    return pNetDataServer_t(new NetDataServer(nds)); 
+    
+  }
+
+  pNetDataServer_t NetDataServer::createINet() 
+  {
+    // FIXME we want internet, right? 
+
+  }
+    
+
+
+  
+  NetDataServer::NetDataServer(pNetDataSender_t & nds):
+    pNetDataSender_(nds)    
   {
     
     
@@ -44,8 +37,7 @@ namespace synthsoma2
 
   void NetDataServer::sendData(DataBuffer * db)
   {
-    boost::mutex::scoped_lock lock(dataqueuemutex_); 
-    dataqueue_.push_back(db); 
+    pNetDataSender_->addDataBuffer(db); 
   }
   
 //   void NetDataServer::dostuff()
@@ -60,5 +52,18 @@ namespace synthsoma2
     
 //   }
 
+  void NetDataServer::run()
+  {
+    pNetDataSender_->run(); 
+    
+  }
+
+  
+  void NetDataServer::shutdown()
+  {
+
+    pNetDataSender_->shutdown(); 
+
+  }
 
 }

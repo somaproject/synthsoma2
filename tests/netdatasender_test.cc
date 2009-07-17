@@ -98,4 +98,73 @@ BOOST_AUTO_TEST_CASE(startup_send_few_events)
 
 }
 
+
+
+BOOST_AUTO_TEST_CASE(startup_send_many_srcs)
+{
+  /*
+    Same as above, with multiple sources
+   */
+
+  boost::filesystem::path tgtdir = createTempDir(); 
+  boost::filesystem::remove_all(tgtdir); 
+  boost::filesystem::create_directory(tgtdir); 
+
+  somanetwork::init_logs(debug); 
+
+  // create other sockets
+  createBoundDomainSocket(tgtdir / "dataretx"); 
+  createBoundDomainSocket(tgtdir / "eventretx"); 
+  createBoundDomainSocket(tgtdir / "eventtx"); 
+  
+  pNetDataSender_t nds = NetDataSender::createDomain(tgtdir); 
+  nds->run(); 
+  
+  sn::pNetworkInterface_t pn = sn::Network::createDomain(tgtdir); 
+  pn->enableDataRX(0, sn::TSPIKE); 
+  pn->enableDataRX(1, sn::TSPIKE); 
+  pn->enableDataRX(2, sn::TSPIKE); 
+  pn->enableDataRX(3, sn::TSPIKE); 
+  pn->run(); 
+
+
+  // now send fake data
+  for (int src = 0; src < 4; src++) {
+    for (int i = 0; i < 10; i++) {
+      sn::TSpike_t ts; 
+      ts.x.wave[0] = i;
+      ts.x.wave[1] = src; 
+      ts.src = src; 
+      size_t len; 
+      sn::pDataPacket_t dp = sn::rawFromTSpikeForTX(ts, 0, &len); 
+      
+      DataBuffer *  db = new DataBuffer(); 
+      
+      memcpy(db->getFrameStartPtr(), &(dp->body[0]), len); 
+      
+      db->src = src; 
+      db->typ = sn::TSPIKE; 
+      
+      db->setFrameLen(len); 
+      nds->addDataBuffer(db); 
+    }
+  }
+  char x; 
+  
+  
+  for (int i = 0; i < 10*4; i++) {
+    read(pn->getDataFifoPipe(), &x, 1); 
+    sn::pDataPacket_t newdp = pn->getNewData(); 
+    sn::TSpike_t ts = sn::rawToTSpike(newdp); 
+    BOOST_CHECK_EQUAL(ts.x.wave[1], ts.src); // should check more? 
+    
+  }
+  
+  pn->shutdown(); 
+
+  nds->shutdown(); 
+
+}
+
 BOOST_AUTO_TEST_SUITE_END(); 
+

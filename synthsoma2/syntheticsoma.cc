@@ -33,18 +33,22 @@ namespace synthsoma2
   
   void SynthSomaRunner::shutdown()
   {
+
     running_ = false; 
     if (pThread_) {
       pThread_->join(); 
     }
 
     pEventBus_->shutdown(); 
+
     pDataBus_->shutdown(); 
 
   }
 
   void SynthSomaRunner::setup()
   {
+    pEventBus_->eventCycleSignal().connect(boost::bind(&DataBus::ecycle, pDataBus_, _1)); 
+
     pEventBus_->run(); 
     pDataBus_->run(); 
     
