@@ -50,8 +50,10 @@ def test():
     event_bus = pysynthsoma2.EventBus(edm)
     data_bus = pysynthsoma2.DataBus(ddm)
 
-    nd1 = pysynthsoma2.NetDataServer.createDomain(domaindir)
-    
+    if useip:
+        nd1 = pysynthsoma2.NetDataServer.createINet(ip)
+    else:
+        nd1 = pysynthsoma2.NetDataServer.createDomain(domaindir)        
     data_bus.setDataSink(nd1)
 
     runner = pysynthsoma2.Runner(event_bus, data_bus)

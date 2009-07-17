@@ -68,7 +68,9 @@ namespace synthsoma2 {
     }; 
 
     typedef boost::shared_ptr<DataDatagram> pDataDatagram_t; 
-    
+
+
+
     class LocalDataDatagram : public DataDatagram
     {
     public:
@@ -80,6 +82,20 @@ namespace synthsoma2 {
       typedef std::map<std::pair<sn::datasource_t, sn::datatype_t>, local::datagram_protocol::endpoint> endpointmap_t; 
       endpointmap_t endpointmap_; 
       local::datagram_protocol::socket socket_; 
+    }; 
+    
+    
+    class INetDataDatagram : public DataDatagram
+    {
+    public:
+      INetDataDatagram(io_service & service, std::string ip);
+      ~INetDataDatagram(); 
+      void send(DataBuffer * db); 
+      
+    private:
+      typedef std::map<std::pair<sn::datasource_t, sn::datatype_t>, ip::udp::endpoint> endpointmap_t; 
+      endpointmap_t endpointmap_; 
+      ip::udp::socket socket_; 
     }; 
     
     
