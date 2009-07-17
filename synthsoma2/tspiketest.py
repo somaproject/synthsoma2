@@ -22,9 +22,20 @@ def test():
     ne1 = pysynthsoma2.NetEventServer.createDomain(domaindir)
     edm[4] = ne1
 
-    # create the tspikes device
+    simplets = pysynthsoma2.SimpleTSpike()
     
-    simplets = pysynthsoma2.SimpleTSpike(1000)
+    # create the tspikes device
+    for j in range(10):
+        ts = pysynthsoma2.TSpike()
+        ts.src = 0;
+        ts.time = 5000 * (j+1);
+        ts.x.wave = [1000 * j * i for i in range(32)]
+        ts.y.wave = [1000 * j * i for i in range(32)]
+        ts.a.wave = [1000 * j * i for i in range(32)]
+        ts.b.wave = [1000 * j * i for i in range(32)]
+    
+
+        simplets.addTSpike(ts)
     edm[8] = simplets
     ddm[0] = simplets
 

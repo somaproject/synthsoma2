@@ -52,6 +52,12 @@ add_executable(eventbus_test
 )
 
 
+add_executable(simpletspike_test
+  runner.cc
+  simpletspike_test.cc
+)
+
+
 set(testlist 
   simple_test
   eventrouter_test
@@ -60,6 +66,7 @@ set(testlist
   eventbus_test
   datasequenceproto_test
   netdatasender_test
+  simpletspike_test
   runtest
 )
 

@@ -11,9 +11,16 @@
 namespace synthsoma2
 {
 
+  class IDataBus
+  {
+  public:
+    // visitor callbacks
+    virtual void newData(sn::datasource_t src, const sn::TSpike_t &) =0;  
+    virtual void newData(sn::datasource_t src, const sn::Wave_t &) = 0; 
+    virtual void newData(sn::datasource_t src, const sn::Raw_t &) = 0; 
+  };
 
-
-  class DataBus : boost::noncopyable
+    class DataBus : public IDataBus, boost::noncopyable
   {
     /*
       The DataBus is simpler than the EventBus, and as a result 

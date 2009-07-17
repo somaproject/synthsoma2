@@ -20,7 +20,7 @@ namespace synthsoma2
   public:
     virtual void setDeviceDataSrc(sn::datasource_t id) = 0; 
     // thread-safe functions! 
-    virtual void visitSubmitData(DataBus * db) = 0;  // visitor-like callback. 
+    virtual void visitSubmitData(IDataBus * db) = 0;  // visitor-like callback. 
 
   }; 
 

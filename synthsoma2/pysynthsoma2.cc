@@ -32,6 +32,24 @@ synthsoma2::pNetDataServer_t dataCreateDomain(std::string s)
 
 }
 
+bp::list ts_get_wave(somanetwork::TSpikeWave_t  * ts)
+{
+  bp::list newlist; 
+  for (int i = 0; i < 32; i++) {
+    newlist.append(ts->wave[i]); 
+  }
+  return newlist;  
+
+}
+
+void ts_set_wave(somanetwork::TSpikeWave_t  * ts, bp::list data)
+{
+  for (int i = 0; i < 32; i++) {
+    ts->wave[i] = bp::extract<int32_t>(data[i]); 
+  }
+
+}
+
 BOOST_PYTHON_MODULE(pysynthsoma2)
 {
   using namespace synthsoma2; 
@@ -42,7 +60,28 @@ BOOST_PYTHON_MODULE(pysynthsoma2)
 
   class_<sn::EventTX_t>("EventTX"); 
 
-  class_<sn::Event_t>("Event"); 
+
+  class_<sn::Event_t>("Event")
+    .def_readwrite("src", &sn::Event_t::src)
+    .def_readwrite("cmd", &sn::Event_t::cmd)
+    .def_readwrite("data", &sn::Event_t::data); 
+    
+  class_<sn::TSpikeWave_t>("TSpikeWave")
+    .def_readwrite("valid", &sn::TSpikeWave_t::valid)
+    .def_readwrite("filtid", &sn::TSpikeWave_t::filtid)
+    .def_readwrite("threshold", &sn::TSpikeWave_t::threshold)
+    // TOTALLY SUBOPTMIAL (FIXME): for the time being we need to assign
+    // this property as an -entire- wave, i.e. ts.wave = range(32)
+    .add_property("wave", &ts_get_wave, &ts_set_wave); 
+
+
+  class_<sn::TSpike_t>("TSpike")
+    .def_readwrite("src", &sn::TSpike_t::src)
+    .def_readwrite("time", &sn::TSpike_t::time)
+    .def_readwrite("x", &sn::TSpike_t::x)
+    .def_readwrite("y", &sn::TSpike_t::y)
+    .def_readwrite("a", &sn::TSpike_t::a)
+    .def_readwrite("b", &sn::TSpike_t::b); 
 
   class_<runnerstats_t>("runnerstats")
     .def_readonly("eventcycles", &runnerstats_t::eventcycles)
@@ -62,6 +101,7 @@ BOOST_PYTHON_MODULE(pysynthsoma2)
   class_<DataBus::devicemap_t>("DataDeviceMap")
     .def(map_indexing_suite<DataBus::devicemap_t>());
 
+  
   
   class_<EventBus, boost::noncopyable, pEventBus_t>("EventBus", 
 						    init<EventBus::devicemap_t>()); 
@@ -111,6 +151,8 @@ BOOST_PYTHON_MODULE(pysynthsoma2)
      .def("createDomain", &eventCreateDomain).staticmethod("createDomain"); 
 
    class_<SimpleTSpike, bases<IEventDevice, IDataDevice>, 
-    pSimpleTSpike_t, boost::noncopyable>("SimpleTSpike", init<size_t>()); 
+    pSimpleTSpike_t, boost::noncopyable>("SimpleTSpike")
+    .def("addTSpike", &SimpleTSpike::addTSpike); 
+
 
 }

@@ -1,27 +1,28 @@
 #include "simpletspike.h"
 #include <boost/foreach.hpp>
+#include <somanetwork/tspike.h>
 
 namespace synthsoma2 {
 
-  SimpleTSpike::SimpleTSpike(size_t everyNEvents) :
-    spikenum_(0), 
-    everyN_(everyNEvents), 
+  SimpleTSpike::SimpleTSpike() : 
     esrc_(0), 
     dsrc_(0), 
     eventToSend_(0), 
-    somatime_(0)
+    somatime_(0), 
+    tspikepos_(0), 
+    cycletimeset_(false)
   {
-
-  }
     
+  }
+
+  void SimpleTSpike::addTSpike(const sn::TSpike_t & ts)
+  {
+    tspikes_.push_back(ts); 
+    maxtime_ = tspikes_[tspikes_.size() -1].time; 
+  }
   void SimpleTSpike::ecycle(ecyclecnt_t cnt)
   {
-    /*     */
-    if ((cnt % everyN_) == 0) {
-      boost::mutex::scoped_lock lock(mutex_);
-      eventToSend_++; 
-    }
-
+    
   }
 
   void SimpleTSpike::setDeviceID(sn::eventsource_t id)
@@ -47,9 +48,17 @@ namespace synthsoma2 {
 	  stime |= evt.data[1]; 
 	  stime = stime << 16; 
 	  stime |= evt.data[2]; 
-	  somatime_ = stime; 
+	  settime(stime); 
 	}
     }
+  }
+
+  void SimpleTSpike::settime(somatime_t t)
+  {
+    /* This only exists so we can easily test
+       the module without having to generate real events */ 
+
+    somatime_ = t; 
   }
 
   void SimpleTSpike::run() 
@@ -69,36 +78,32 @@ namespace synthsoma2 {
 
   }
 
-  void SimpleTSpike::visitSubmitData(DataBus * db)
+  void SimpleTSpike::visitSubmitData(IDataBus * db)
   {
-    bool tosend = false; 
-    {
-      boost::mutex::scoped_lock lock(mutex_);
-      if (eventToSend_ > 0) {
-	tosend = true; 
-	eventToSend_--;
-      }
-    }
-
-    if(tosend) {
-      sn::TSpike_t ts; 
-      ts.src = dsrc_; 
-      spikenum_++; 
-      ts.time = somatime_; 
-      sn::TSpikeWave_t * wv[] = {&ts.x, &ts.y, &ts.a, &ts.b}; 
-      for (int i = 0; i < 4; i++) {
-	wv[i]->filtid = spikenum_; 
-	for (int j = 0; j < 32; j++) {
-	  wv[i]->wave[j] = i * 0x10000 + j; 
+    if (!tspikes_.empty()) { 
+      if(!cycletimeset_){
+	cyclestarttime_ = somatime_; 
+	cycletimeset_ = true; 
+      } else {
+	// normal operation
+	
+	while (somatime_ - cyclestarttime_  > tspikes_[tspikepos_].time) {
+	  // send the tspike
+	  sn::TSpike_t ts = tspikes_[tspikepos_]; 
+	  ts.time = cyclestarttime_ + ts.time; 
+	  db->newData(dsrc_, ts);       
+	  
+	  // now consider incrementing the tspikepos_, cyclestarttime; 
+	  tspikepos_++;
+	  if (tspikepos_ == tspikes_.size()) {
+	    tspikepos_ = 0; 
+	    cyclestarttime_ += tspikes_[tspikes_.size() -1].time; 
+	  }
 	}
+	
       }
       
-      // FIXME: add some stuff here
-      db->newData(dsrc_, ts);       
-      spikenum_++; 
     }
-    
   }
-  
 
 }
