@@ -32,7 +32,8 @@ namespace synthsoma2 {
 
   eventtxlist_t SimpleTSpike::getTXEvents()
   {
-
+    eventtxlist_t e; 
+    return e; 
   }
 
   void SimpleTSpike::sendEvents(const eventlist_t & el)

@@ -24,6 +24,7 @@ namespace synthsoma2
   void EventRouter::enableDevice(sn::eventsource_t src)
   {
 
+
     if (src > ( MAXEVENT -1)) {
       throw std::runtime_error("Cannot enable event source > MAXEVENT"); 
     }

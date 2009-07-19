@@ -40,7 +40,7 @@ namespace synthsoma2
       {
 	p.second->run(); 
       }
-    
+
   }
   
   void EventBus::shutdown()

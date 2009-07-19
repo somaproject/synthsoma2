@@ -25,6 +25,10 @@ add_executable(async_udp_server
   async_udp_server.cc
 )
 
+add_executable(eventbusbench
+  eventbus.cc
+)
+
 # add_executable(simplesynthsoma
 #   simplesynthsoma.cc
 # )
@@ -60,6 +64,15 @@ target_link_libraries(async_udp_server
   ${SOMADEPS_LIBRARIES}
     ${PYTHON_LIBRARY}
 
+  )
+
+target_link_libraries(eventbusbench
+  synthsoma2_test
+
+  ${Boost_LIBRARIES} 
+  ${SOMADEPS_LIBRARIES}
+  ${PYTHON_LIBRARY}
+  
   )
 
 
