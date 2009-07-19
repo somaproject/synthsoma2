@@ -90,6 +90,7 @@ namespace synthsoma2 {
 
   void DataBus::newData(sn::datasource_t src, const sn::TSpike_t &ts)
   {
+
     if(datasink_) {
 
       
@@ -108,21 +109,38 @@ namespace synthsoma2 {
       datasink_->sendData(db);
     }
     
+    stats_.submittedPackets++; 
+
   }
 
   void DataBus::newData(sn::datasource_t src, const sn::Wave_t &)
   {
-    DataBuffer * db = new DataBuffer(); 
-    // FIXME
+    if(datasink_) {
+      
+      DataBuffer * db = new DataBuffer(); 
+      // FIXME this is a libsomanetwork problem
+
+    }
+    stats_.submittedPackets++; 
   }
 
   void DataBus::newData(sn::datasource_t src, const sn::Raw_t &) 
   {
-    DataBuffer * db = new DataBuffer(); 
-    // FIXME
+
+    if(datasink_) {
+      DataBuffer * db = new DataBuffer(); 
+
+      
+      // FIXME this is a libsomanetwork problem
+    }
+    stats_.submittedPackets++; 
   }
   
-
+  DataBusStats DataBus::getStats()
+  {
+    // FIXME this should be protected by a mutex
+    return stats_; 
+  }
   
 
 }

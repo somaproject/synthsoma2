@@ -19,8 +19,18 @@ namespace synthsoma2
     virtual void newData(sn::datasource_t src, const sn::Wave_t &) = 0; 
     virtual void newData(sn::datasource_t src, const sn::Raw_t &) = 0; 
   };
+  
+  class DataBusStats {
+  public:
+    inline DataBusStats() :
+      submittedPackets(0)
+    {
+    }
 
-    class DataBus : public IDataBus, boost::noncopyable
+    size_t submittedPackets; 
+  }; 
+
+  class DataBus : public IDataBus, boost::noncopyable
   {
     /*
       The DataBus is simpler than the EventBus, and as a result 
@@ -78,6 +88,8 @@ namespace synthsoma2
     void newData(sn::datasource_t src, const sn::Wave_t &); 
     void newData(sn::datasource_t src, const sn::Raw_t &); 
 
+    DataBusStats getStats(); 
+
   private:
     devicemap_t devices_; 
     pDataSink_t datasink_; 
@@ -92,6 +104,8 @@ namespace synthsoma2
     boost::mutex mutex_;
 
     boost::thread * pthread_;     
+    DataBusStats stats_; 
+
   }; 
 
   typedef boost::shared_ptr<DataBus> pDataBus_t; 

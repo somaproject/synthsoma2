@@ -1,13 +1,13 @@
-The design here is similar to soma, with a network layer handling
-all arbitration, retransmission, and packetizing. 
+The design here is similar to soma, with a network layer handling all
+arbitration, retransmission, and packetizing.
 
-Perhaps the only in-process event source will be the timer? 
+Perhaps the only in-process event source will be the timer?
 
 EventCycle count: a 64-bit event cycle index. different from the
-system timer as we might want the system timer to start at a
-different offset for testing. 
+system timer as we might want the system timer to start at a different
+offset for testing.
 
-EventRouterBuffer
+EventRouter
 ============================================
 
 The EventRouterBuffer basically works like the event buffer, taking
@@ -25,7 +25,4 @@ eventRotuter.gatherEvents(eventsrc_t)
 get events pending for this source that have been sent since the last invocation	
  of gatherEvents()
 
-
-
-FIXME: Do we want to use the boost::circular buffer here? 
 

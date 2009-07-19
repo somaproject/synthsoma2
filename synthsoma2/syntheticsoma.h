@@ -16,12 +16,15 @@ namespace synthsoma2
     float eventcyclerate; 
     size_t eventsenttotal;
     size_t eventreceivetotal; 
-
+    size_t datapackets; 
+    size_t datapacketrate; 
     runnerstats_t() :
       eventcycles(0),
       eventcyclerate(0.),
       eventsenttotal(0), 
-      eventreceivetotal(0)
+      eventreceivetotal(0), 
+      datapackets(0), 
+      datapacketrate(0)
     {
     }
     

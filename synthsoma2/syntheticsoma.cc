@@ -85,7 +85,6 @@ namespace synthsoma2
     runnerstats_.eventsenttotal = pEventBus_->getTotalCounts().first; 
     runnerstats_.eventreceivetotal = pEventBus_->getTotalCounts().second; 
 
-
   }
   
   void SynthSomaRunner::timer_arm()
@@ -118,6 +117,11 @@ namespace synthsoma2
     runnerstats_.eventcyclerate = float( bencheventcnt_) / worktime.total_seconds();
     bencheventcnt_ = 0; 
     
+    DataBusStats dbs = pDataBus_->getStats(); 
+    
+    runnerstats_.datapacketrate = 
+      (dbs.submittedPackets - runnerstats_.datapackets) / worktime.total_seconds();
+    runnerstats_.datapackets = dbs.submittedPackets; 
     
     lastbench_ = newlastbench; 
 

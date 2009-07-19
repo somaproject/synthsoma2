@@ -38,7 +38,7 @@ def test():
         for j in range(10):
             ts = pysynthsoma2.TSpike()
             ts.src = 0;
-            ts.time = 5000 * (j+1);
+            ts.time = 50 * (j+1);
             ts.x.wave = [1000 * j * i for i in range(32)]
             ts.y.wave = [1000 * j * i for i in range(32)]
             ts.a.wave = [1000 * j * i for i in range(32)]
