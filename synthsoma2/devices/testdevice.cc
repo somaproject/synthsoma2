@@ -39,21 +39,24 @@ namespace synthsoma2
   }
 
 
-  eventtxlist_t TestDevice::getTXEvents() {
-    // FIXME: we have got to do something about this double-copying. 
+  const optEventTX_t TestDevice::getTXEvent() {
 
+    optEventTX_t oute ;
     boost::mutex::scoped_lock lock(outmutex_); 
-    eventtxlist_t oute = outboundevents_; 
-    outboundevents_.clear(); 
+    if (!outboundevents_.empty()) { 
+      oute = boost::make_optional(outboundevents_.front()); 
+      outboundevents_.pop_front(); 
+    }
+
     return oute; 
 
   }
 
-  void TestDevice::sendEvents(const eventlist_t & el) 
+  void TestDevice::sendEvent(const sn::Event_t & etx) 
   {
     boost::mutex::scoped_lock lock(inmutex_); 
     
-    inboundevents_.insert(inboundevents_.end(), el.begin(), el.end());
+    inboundevents_.push_back(etx); 
     
   }
 

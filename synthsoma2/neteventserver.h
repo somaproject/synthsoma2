@@ -33,8 +33,9 @@ namespace synthsoma2
 
     // 
     void ecycle(ecyclecnt_t); 
-    eventtxlist_t getTXEvents(); 
-    void sendEvents(const eventlist_t &); 
+
+    const optEventTX_t getTXEvent(); 
+    void sendEvent(const sn::Event_t &); 
     // Assume each sendEvents invocation constitutes a single
     // ecycle's worth of events? 
     

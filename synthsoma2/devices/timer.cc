@@ -54,15 +54,18 @@ namespace synthsoma2
   }
   
 
-  eventtxlist_t Timer::getTXEvents() {
+  const optEventTX_t Timer::getTXEvent() {
     // FIXME: we have got to do something about this double-copying. 
     
-    eventtxlist_t oute = outboundevents_; 
-    outboundevents_.clear(); 
-    return oute; 
+    optEventTX_t etx; 
+    if (!outboundevents_.empty()) {
+      etx = boost::make_optional(outboundevents_.front()); 
+      outboundevents_.pop_front(); 
+    }
+    return etx;  
   }
 
-  void Timer::sendEvents(const eventlist_t &) 
+  void Timer::sendEvent(const sn::Event_t &) 
   {
     // no op 
   }

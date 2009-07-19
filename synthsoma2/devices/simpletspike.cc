@@ -30,29 +30,6 @@ namespace synthsoma2 {
     esrc_ = id; 
   }
 
-  eventtxlist_t SimpleTSpike::getTXEvents()
-  {
-    eventtxlist_t e; 
-    return e; 
-  }
-
-  void SimpleTSpike::sendEvents(const eventlist_t & el)
-  {
-    
-    BOOST_FOREACH(sn::Event_t evt, el) {
-      if (evt.src == 0x00 && evt.cmd == 0x10 )
-	{
-	  // this is the time
-	  somatime_t stime = 0; 
-	  stime = evt.data[0]; 
-	  stime = stime << 16; 
-	  stime |= evt.data[1]; 
-	  stime = stime << 16; 
-	  stime |= evt.data[2]; 
-	  settime(stime); 
-	}
-    }
-  }
 
   void SimpleTSpike::settime(somatime_t t)
   {
@@ -72,6 +49,28 @@ namespace synthsoma2 {
 
 
   }
+  
+  const optEventTX_t SimpleTSpike::getTXEvent()
+  {
+
+
+  }
+
+  void SimpleTSpike::sendEvent(const sn::Event_t & evt)
+  {
+    if (evt.src == 0x00 && evt.cmd == 0x10 )
+      {
+	// this is the time
+	somatime_t stime = 0; 
+	stime = evt.data[0]; 
+	stime = stime << 16; 
+	stime |= evt.data[1]; 
+	stime = stime << 16; 
+	stime |= evt.data[2]; 
+	settime(stime); 
+      }
+  }
+
   
   void SimpleTSpike::setDeviceDataSrc(sn::datasource_t id) 
   {

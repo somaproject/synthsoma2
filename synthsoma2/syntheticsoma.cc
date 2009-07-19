@@ -47,7 +47,6 @@ namespace synthsoma2
 
   void SynthSomaRunner::setup()
   {
-    pEventBus_->eventCycleSignal().connect(boost::bind(&DataBus::ecycle, pDataBus_, _1)); 
 
     pEventBus_->run(); 
     pDataBus_->run(); 
@@ -65,7 +64,7 @@ namespace synthsoma2
     while (consumed < worktime) {
       // do an event cycle
       pEventBus_->eventcycle(); 
-
+      pDataBus_->ecycle(0);  // FIXME add correct count? 
       bencheventcnt_ += 1; 
       eventcnt++; 
 

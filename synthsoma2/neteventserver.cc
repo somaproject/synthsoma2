@@ -48,15 +48,17 @@ namespace synthsoma2
 
   }
 
-  eventtxlist_t NetEventServer::getTXEvents() {
-    
-    eventtxlist_t t; // FIXME empty
-    return t; 
-    
+  const optEventTX_t NetEventServer::getTXEvent()
+  {
+    optEventTX_t oetx;  // FIXME 
+    return oetx; 
   }
   
-  void NetEventServer::sendEvents(const eventlist_t & el)
+  void NetEventServer::sendEvent(const sn::Event_t & e)
   {
+    // pNetEventSender_->addEvents(el); // FIXME do something
+    eventlist_t el; 
+    el.push_back(e); 
     pNetEventSender_->addEvents(el); 
 
   }

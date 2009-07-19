@@ -13,7 +13,6 @@ link_directories(
 
 set(synthsoma2_SRCS
   sslogging.cc
-  eventrouter.cc
   neteventsender.cc
   asioutil.cc
   neteventserver.cc

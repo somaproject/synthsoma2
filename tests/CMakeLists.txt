@@ -14,10 +14,6 @@ add_executable(simple_test
   simple_test.cc
 )
 
-add_executable(eventrouter_test
-  runner.cc
-  eventrouter_test.cc
-)
 
 add_executable(tsretxbuffer_test
   runner.cc
@@ -60,7 +56,6 @@ add_executable(simpletspike_test
 
 set(testlist 
   simple_test
-  eventrouter_test
   tsretxbuffer_test
   neteventsender_test
   eventbus_test

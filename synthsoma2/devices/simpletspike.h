@@ -29,8 +29,10 @@ namespace synthsoma2
     void addTSpike(const sn::TSpike_t & ts); 
     void ecycle(ecyclecnt_t); 
     void setDeviceID(sn::eventsource_t id); 
-    eventtxlist_t getTXEvents(); 
-    void sendEvents(const eventlist_t &); 
+
+    const optEventTX_t getTXEvent(); 
+    void sendEvent(const sn::Event_t &); 
+
     void run(); 
     void shutdown(); 
     void settime(somatime_t); 
