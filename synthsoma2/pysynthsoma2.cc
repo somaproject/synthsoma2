@@ -87,7 +87,9 @@ BOOST_PYTHON_MODULE(pysynthsoma2)
     .def_readonly("eventcycles", &runnerstats_t::eventcycles)
     .def_readonly("eventcyclerate", &runnerstats_t::eventcyclerate)
     .def_readonly("eventsenttotal", &runnerstats_t::eventsenttotal)
-    .def_readonly("eventreceivetotal", &runnerstats_t::eventreceivetotal); 
+    .def_readonly("eventreceivetotal", &runnerstats_t::eventreceivetotal)
+    .def_readonly("datapackets", &runnerstats_t::datapackets)
+    .def_readonly("datapacketrate", &runnerstats_t::datapacketrate); 
 
 
   /* -----------------------------------------------------------------------

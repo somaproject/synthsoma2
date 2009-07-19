@@ -12,7 +12,7 @@ def test_timer_and_net_and_tspike():
     ne1 = pysynthsoma2.NetEventServer.createDomain(domaindir)
     dm[4] = ne1
 
-    simplets = pysynthsoma2.SimpleTSpike(1000)
+    simplets = pysynthsoma2.SimpleTSpike()
     dm[8] = simplets
 
 

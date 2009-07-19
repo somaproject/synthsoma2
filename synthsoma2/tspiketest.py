@@ -7,7 +7,7 @@ import tempfile
 
 def test():
 
-    useip = True
+    useip =  False
     if useip:
         ip = "127.0.0.1"
         
@@ -30,7 +30,7 @@ def test():
         
     edm[4] = ne1
 
-    TSPIKESOURCE_N = 4
+    TSPIKESOURCE_N = 8
     for src in range(TSPIKESOURCE_N):
         simplets = pysynthsoma2.SimpleTSpike()
 
@@ -73,7 +73,7 @@ def test():
     while(True) :
         time.sleep(1)
         s = runner.getStats()
-        print s.eventcycles, s.eventcyclerate
+        print s.eventcycles, s.eventcyclerate, s.datapackets, s.datapacketrate
     
         
     runner.shutdown()
