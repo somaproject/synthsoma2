@@ -4,8 +4,10 @@
 namespace synthsoma2
 {
   
-  NetEventServer::NetEventServer(pNetEventSender_t es) :
-    pNetEventSender_(es)
+  NetEventServer::NetEventServer(pNetEventSender_t esend, 
+				 pNetEventReceiver_t erecv) :
+    pNetEventSender_(esend),
+    pNetEventReceiver_(erecv)
   {
     
 
@@ -20,13 +22,18 @@ namespace synthsoma2
 
   pNetEventServer_t NetEventServer::createDomain(boost::filesystem::path root)
   {
-    pNetEventServer_t es(new NetEventServer(NetEventSender::createDomain(root))); 
+    
+
+    pNetEventServer_t es(new NetEventServer(NetEventSender::createDomain(root), 
+					    NetEventReceiverFactory::createDomain(root))); 
+
     return es; 
   }
 
   pNetEventServer_t NetEventServer::createINet(std::string IP)
   {
-    pNetEventServer_t es(new NetEventServer(NetEventSender::createINet(IP))); 
+    pNetEventServer_t es(new NetEventServer(NetEventSender::createINet(IP), 
+					    NetEventReceiverFactory::createINet())); 
     return es; 
   }
   

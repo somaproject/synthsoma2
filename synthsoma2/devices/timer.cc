@@ -55,8 +55,6 @@ namespace synthsoma2
   
 
   const optEventTX_t Timer::getTXEvent() {
-    // FIXME: we have got to do something about this double-copying. 
-    
     optEventTX_t etx; 
     if (!outboundevents_.empty()) {
       etx = boost::make_optional(outboundevents_.front()); 

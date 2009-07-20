@@ -4,6 +4,7 @@
 #include <synthsoma2/types.h>
 #include <synthsoma2/eventdevice.h>
 #include <synthsoma2/neteventsender.h>
+#include <synthsoma2/neteventreceiver.h>
 
 namespace synthsoma2
 {
@@ -41,9 +42,9 @@ namespace synthsoma2
     
     ~NetEventServer();
   private:
-    NetEventServer(pNetEventSender_t); 
+    NetEventServer(pNetEventSender_t, pNetEventReceiver_t); 
     pNetEventSender_t pNetEventSender_; 
-    
+    pNetEventReceiver_t pNetEventReceiver_; 
     
   }; 
   

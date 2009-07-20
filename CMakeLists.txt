@@ -3,6 +3,8 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 PROJECT(synthsoma2)
 
+SET(Boost_ADDITIONAL_VERSIONS "1.38" "1.38.0" "1.39" "1.39.0")
+
 find_package(Boost 1.37.0 COMPONENTS thread unit_test_framework filesystem program_options system signals python REQUIRED)
 find_package(PkgConfig)
 

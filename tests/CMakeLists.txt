@@ -41,6 +41,12 @@ add_executable(netdatasender_test
   netdatasender_test.cc
   )
 
+add_executable(neteventreceiver_test
+  runner.cc
+  testutil.cc
+  neteventreceiver_test.cc
+  )
+
 add_executable(eventbus_test
   runner.cc
   testutil.cc
@@ -58,6 +64,7 @@ set(testlist
   simple_test
   tsretxbuffer_test
   neteventsender_test
+  neteventreceiver_test
   eventbus_test
   datasequenceproto_test
   netdatasender_test

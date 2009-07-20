@@ -23,6 +23,7 @@ set(synthsoma2_SRCS
   databuffer.cc
   netdataserver.cc
   netdatasender.cc
+  neteventreceiver.cc
   datasequenceproto.cc
 )
 

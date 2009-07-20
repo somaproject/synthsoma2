@@ -19,7 +19,9 @@ namespace synthsoma2
   typedef uint64_t ecyclecnt_t; 
   typedef std::list<sn::EventTX_t> eventtxlist_t; 
   typedef sn::EventList_t eventlist_t; 
-  
+
+  typedef boost::optional<sn::EventTX_t> optEventTX_t; 
+
   typedef uint64_t somatime_t; 
   
   class NetEventSender; 
@@ -46,6 +48,12 @@ namespace synthsoma2
 
   class NetDataSender;
   typedef boost::shared_ptr<NetDataSender> pNetDataSender_t; 
+
+  class INetEventReceiver; 
+  typedef boost::shared_ptr<INetEventReceiver> pNetEventReceiver_t; 
+  
+  template<typename T>
+  class NetEventReceiver; 
 
 }
 

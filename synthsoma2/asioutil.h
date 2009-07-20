@@ -100,8 +100,7 @@ namespace synthsoma2 {
     
     
   }
-  
-  
+
 }
 
 #endif
