@@ -71,7 +71,7 @@ namespace synthsoma2
       consumed += microseconds(20); 
     }
 
-    newlastinvoke += (consumed - worktime); 
+    newlastinvoke = lastinvoke_ + consumed; 
     
     lastinvoke_ = newlastinvoke; 
 

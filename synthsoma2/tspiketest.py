@@ -30,7 +30,7 @@ def test():
         
     edm[4] = ne1
 
-    TSPIKESOURCE_N = 8
+    TSPIKESOURCE_N = 16
     for src in range(TSPIKESOURCE_N):
         simplets = pysynthsoma2.SimpleTSpike()
 
