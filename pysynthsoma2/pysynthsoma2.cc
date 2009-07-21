@@ -50,6 +50,27 @@ void ts_set_wave(somanetwork::TSpikeWave_t  * ts, bp::list data)
 
 }
 
+boost::python::list TestDevice_pyGetReceivedEvents(synthsoma2::TestDevice *td)
+{
+  boost::python::list l; 
+  synthsoma2::eventlist_t eventlist = td->debugGetReceivedEvents(); 
+  
+  BOOST_FOREACH(somanetwork::Event_t e,  eventlist) {
+    l.append(e); 
+  }
+  
+  return l; 
+}
+
+void TestDevice_pySendTXEvents(synthsoma2::TestDevice * td, 
+			       const somanetwork::EventTX_t & e)
+{
+  td->debugSendTXEvents(e); 
+}
+
+    
+
+
 BOOST_PYTHON_MODULE(pysynthsoma2)
 {
   using namespace synthsoma2; 
@@ -140,8 +161,8 @@ BOOST_PYTHON_MODULE(pysynthsoma2)
   // Text Device
   class_<TestDevice, bases<IEventDevice>, pTestDevice_t, 
     boost::noncopyable>("TestDevice")
-    .def("sendTXEvents", &TestDevice::pySendTXEvents)
-    .def("getEvents", &TestDevice::pyGetReceivedEvents);
+    .def("sendTXEvents", &TestDevice_pySendTXEvents)
+    .def("getEvents", &TestDevice_pyGetReceivedEvents);
 
    // Timer
    class_<Timer, bases<IEventDevice>, pTimer_t, boost::noncopyable>

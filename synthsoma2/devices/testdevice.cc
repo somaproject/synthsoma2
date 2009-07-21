@@ -75,24 +75,6 @@ namespace synthsoma2
 
   }
 
-  
-  boost::python::list TestDevice::pyGetReceivedEvents()
-  {
-    boost::python::list l; 
-    eventlist_t eventlist = TestDevice::debugGetReceivedEvents(); 
-    
-    BOOST_FOREACH(sn::Event_t e,  eventlist) {
-      l.append(e); 
-    }
-    
-    return l; 
-  }
-
-  void TestDevice::pySendTXEvents(const sn::EventTX_t & e)
-  {
-    debugSendTXEvents(e); 
-  }
-    
 
 
 
