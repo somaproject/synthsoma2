@@ -61,7 +61,7 @@ def test():
     runner = pysynthsoma2.Runner(event_bus, data_bus)
 
     # create the missing sockets FIXME:
-    needed = ['dataretx', 'eventretx', 'eventtx']
+    needed = ['dataretx', 'eventretx']
     socks = []
     for n in needed:
         sock = socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM)

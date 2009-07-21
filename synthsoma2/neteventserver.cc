@@ -23,7 +23,6 @@ namespace synthsoma2
   pNetEventServer_t NetEventServer::createDomain(boost::filesystem::path root)
   {
     
-
     pNetEventServer_t es(new NetEventServer(NetEventSender::createDomain(root), 
 					    NetEventReceiverFactory::createDomain(root))); 
 

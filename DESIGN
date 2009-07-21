@@ -7,22 +7,3 @@ EventCycle count: a 64-bit event cycle index. different from the
 system timer as we might want the system timer to start at a different
 offset for testing.
 
-EventRouter
-============================================
-
-The EventRouterBuffer basically works like the event buffer, taking
-in EventTX_t packets from each of N sources, redistributing them 
-
-eventRouter.add(eventsrc_t, EventTX_t)
-
-ecyclecnt_t eventRouter.startecycle() : signal an "event cycle", and take
-at most one event from each src and place it in the output queue
-
-eventrouter::dispatchEcycleEvents()
-
-
-eventRotuter.gatherEvents(eventsrc_t)
-get events pending for this source that have been sent since the last invocation	
- of gatherEvents()
-
-
