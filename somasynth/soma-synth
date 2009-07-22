@@ -1,0 +1,16 @@
+#!/usr/bin/python
+import os
+from optparse import OptionParser
+from soma_apps import pysynthsoma2
+
+
+if __name__ == "__main__":
+
+
+    parser = OptionParser()
+    parser.add_option("-i", "--ip", dest="ip",
+                      help="ip address to send soma data to", default="127.0.0.1")
+    
+    (options, args) = parser.parse_args()
+    
+    
