@@ -2,7 +2,7 @@
 import os
 from optparse import OptionParser
 from soma_apps import pysynthsoma2
-
+import time
 
 if __name__ == "__main__":
 
@@ -13,4 +13,14 @@ if __name__ == "__main__":
     
     (options, args) = parser.parse_args()
     
+    runner = pysynthsoma2.default.ip(options.ip)
+
+    runner.run()
+    while(True) :
+        time.sleep(1)
+        s = runner.getStats()
+        print s.eventcycles, s.eventcyclerate, s.datapackets, s.datapacketrate
     
+    runner.shutdown()
+    s = runner.getStats()
+

@@ -74,8 +74,7 @@ def test():
         time.sleep(1)
         s = runner.getStats()
         print s.eventcycles, s.eventcyclerate, s.datapackets, s.datapacketrate
-    
-        
+
     runner.shutdown()
     s = runner.getStats()
     

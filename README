@@ -27,8 +27,8 @@ Projects:
    libsynthsoma2 : the c++ library
    pysynthsoma   : The python bindings to the c++ library, 
                    along with some utility features
-   soma-synth    : The synthetic soma runner, with optional gui (in python)
-
+   soma-synth    : The synthetic soma runner, with optional gui (in python).
+                   Easy to use, by default does "right thing" 
 
 
 Code overview
