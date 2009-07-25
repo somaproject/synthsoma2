@@ -22,5 +22,13 @@ target_link_libraries(pysynthsoma2
 
 
 )
+
 set_target_properties(pysynthsoma2 PROPERTIES PREFIX "")
+
+INSTALL(FILES __init__.py  default.py pysynthsoma2.so 
+	       DESTINATION ${PY_SOMA_TARGET}/pysynthsoma2/)
+
+# then for recorder
+#INSTALL(FILES 
+#  DESTINATION "${PY_SOMA_TARGET}/pysynthsoma2")
 

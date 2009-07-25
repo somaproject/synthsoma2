@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 import os
 from optparse import OptionParser
 from soma_apps import pysynthsoma2

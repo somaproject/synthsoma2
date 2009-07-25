@@ -48,3 +48,10 @@ target_link_libraries(synthsoma2
 )
 
 add_subdirectory(devices)
+
+install( TARGETS synthsoma2 LIBRARY
+  DESTINATION lib)
+
+install(FILES ${somanetwork_HEADERS}
+  DESTINATION
+  include/${PROJECT_NAME}-${LIBRARY_VERSION}/${PROJECT_NAME})
