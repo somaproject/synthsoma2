@@ -1,6 +1,7 @@
 import pysynthsoma2
 from nose.tools import *
 import time
+import tempfile
 
 def test_runnerstats():
 
@@ -93,7 +94,7 @@ def test_timer_and_net():
     td = pysynthsoma2.Timer()
     dm[0] = td
     
-    ne1 = pysynthsoma2.NetEventServer.createDomain("/tmp/testtwo")
+    ne1 = pysynthsoma2.NetEventServer.createDomain(tempfile.mkdtemp())
     dm[4] = ne1
 
     event_bus = pysynthsoma2.EventBus(dm)
@@ -117,3 +118,28 @@ def test_timer_and_net():
     assert_true(s.eventsenttotal, T * 50000 * 0.9)
     
 
+def test_DSPBoard():
+    dm = pysynthsoma2.EventDeviceMap()
+
+    td = pysynthsoma2.Timer()
+    dm[0] = td
+
+    dspb = pysynthsoma2.DSPBoard()
+    dm[8] = dspb
+
+    event_bus = pysynthsoma2.EventBus(dm)
+    
+    ddm = pysynthsoma2.DataDeviceMap()
+    data_bus = pysynthsoma2.DataBus(ddm)
+
+    runner = pysynthsoma2.Runner(event_bus, data_bus)
+    
+    runner.run()
+    T = 2
+    time.sleep(T)
+    print "Shutting down" 
+    runner.shutdown()
+    s = runner.getStats()
+    assert_true(s.eventcycles > 50000 * 0.9 * T)
+    assert_true(s.eventsenttotal, T * 50000 * 0.9)
+    

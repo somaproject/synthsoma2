@@ -5,6 +5,7 @@ set(devices_SRCS
   timer.cc
   testdevice.cc
   simpletspike.cc
+  dspboard.cc
 )
 
 ADD_LIBRARY(synthsoma2_devices_test
@@ -17,19 +18,14 @@ ADD_LIBRARY(devices SHARED
 
 )
 
-# ADD_LIBRARY(devices SHARED
-#   ${devices_SRCS}
-#   pydevices.cc
-# )
-
 target_link_libraries(synthsoma2_devices_test
   ${Boost_LIBRARIES} ${SOMADEPS_LIBRARIES})
 
-# target_link_libraries(devices
-#   ${Boost_LIBRARIES} 
-#   ${SOMADEPS_LIBRARIES}
-#   ${PYTHON_LIBRARY}
-# )
+target_link_libraries(devices
+  ${Boost_LIBRARIES} 
+  ${SOMADEPS_LIBRARIES}
+
+)
 
 
 # set_target_properties(devices PROPERTIES PREFIX "")

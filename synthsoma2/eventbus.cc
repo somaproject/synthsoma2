@@ -46,6 +46,11 @@ namespace synthsoma2
   
   void EventBus::shutdown()
   {
+    BOOST_FOREACH(devicepair_t p, devices_)
+      {
+	p.second->shutdown(); 
+      }
+
     
     
   }

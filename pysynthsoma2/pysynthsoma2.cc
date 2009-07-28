@@ -14,6 +14,7 @@
 #include <synthsoma2/devices/testdevice.h>
 #include <synthsoma2/devices/timer.h>
 #include <synthsoma2/devices/simpletspike.h>
+#include <synthsoma2/devices/dspboard.h>
 #include <synthsoma2/neteventserver.h>
 #include <synthsoma2/netdataserver.h>
 
@@ -68,7 +69,24 @@ void TestDevice_pySendTXEvents(synthsoma2::TestDevice * td,
   td->debugSendTXEvents(e); 
 }
 
-    
+
+void DSPBoard_setSampleBuffer(synthsoma2::DSPBoard * dspb, 
+			      bp::list pysamps)
+{
+
+  std::vector<synthsoma2::DSPBoard::samples_t> samps; 
+
+  using namespace boost::python; 
+  for (int i = 0; i < len(pysamps); i++) {
+    synthsoma2::DSPBoard::samples_t newsamps; 
+    for (int j = 0; j < 10; j++) {
+      newsamps[j] = extract<double>(pysamps[i][j]); 
+    }
+    samps.push_back(newsamps); 
+  }
+  dspb->setSampleBuffer(samps); 
+
+}
 
 
 BOOST_PYTHON_MODULE(pysynthsoma2)
@@ -178,6 +196,11 @@ BOOST_PYTHON_MODULE(pysynthsoma2)
    class_<SimpleTSpike, bases<IEventDevice, IDataDevice>, 
     pSimpleTSpike_t, boost::noncopyable>("SimpleTSpike")
     .def("addTSpike", &SimpleTSpike::addTSpike); 
+
+   class_<DSPBoard, bases<IEventDevice, IDataDevice>, 
+    pDSPBoard_t, boost::noncopyable>("DSPBoard")
+    .def("setSampleBuffer", &DSPBoard_setSampleBuffer);
+
 
 
 }
