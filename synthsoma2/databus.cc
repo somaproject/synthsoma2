@@ -100,6 +100,7 @@ namespace synthsoma2 {
       db->typ = sn::TSPIKE; 
       size_t len; 
       
+      
       sn::pDataPacket_t dp = sn::rawFromTSpikeForTX(ts, 0, &len); 
       
       memcpy(db->getFrameStartPtr(), &(dp->body[0]), len); 
@@ -107,6 +108,8 @@ namespace synthsoma2 {
       db->setFrameLen(len); 
 
       datasink_->sendData(db);
+      SS2L_(info) << "DataBus:: sending TSpike from src = " 
+		  << (int)src ; 
     }
     
     stats_.submittedPackets++; 
@@ -119,6 +122,8 @@ namespace synthsoma2 {
       
       DataBuffer * db = new DataBuffer(); 
       // FIXME this is a libsomanetwork problem
+      SS2L_(info) << "DataBus:: warning WAVE not implemented for src " 
+		  << (int)src ; 
 
     }
     stats_.submittedPackets++; 
@@ -132,6 +137,9 @@ namespace synthsoma2 {
 
       
       // FIXME this is a libsomanetwork problem
+      SS2L_(info) << "DataBus:: warning RAW not implemented for src " 
+		  << (int)src ; 
+
     }
     stats_.submittedPackets++; 
   }

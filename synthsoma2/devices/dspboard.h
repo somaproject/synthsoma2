@@ -7,6 +7,8 @@
 #include <boost/circular_buffer.hpp>
 
 #include <vector>
+#include <list>
+
 
 namespace synthsoma2
 {
@@ -54,6 +56,8 @@ namespace synthsoma2
     somadspio::mock::MockDSPBoard * dspboard_; 
 
     void sendevent_cb(somanetwork::EventTX_t evt); 
+    void senddata_cb(unsigned char *); 
+
     boost::mutex eventoutmutex_; 
     std::list<somanetwork::EventTX_t> outevents_; 
 
@@ -70,6 +74,10 @@ namespace synthsoma2
 
     boost::mutex eventinmutex_; 
     std::list<somanetwork::Event_t> inevents_; 
+
+    boost::mutex outdatamutex_; 
+
+    std::list<unsigned char *> outdata_; 
 
   }; 
 

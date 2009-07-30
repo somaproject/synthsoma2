@@ -12,7 +12,7 @@ import time
 import tempfile
 
 
-def ip(ipaddr, TSPIKESOURCEN=8):
+def ip(ipaddr):
     """
     Create default with IP connection
 
@@ -21,7 +21,7 @@ def ip(ipaddr, TSPIKESOURCEN=8):
     ne1 = pysynthsoma2.NetEventServer.createINet(ipaddr)    
     nd1 = pysynthsoma2.NetDataServer.createINet(ipaddr)
 
-    return create_default(ne1, nd1, TSPIKESOURCEN)
+    return ne1, nd1
 
 def domain(rootdir = None):
     if rootdir == None:
@@ -39,7 +39,7 @@ def domain(rootdir = None):
         sock.bind(rootdir + "/" + n)
         socks.append(sock)
 
-    return create_default(ne1, nd1)
+    return ne1, nd1
 
 
 def create_default_simple_tspike(ne1, nd1, TSPIKESOURCE_N = 8):
@@ -59,7 +59,7 @@ def create_default_simple_tspike(ne1, nd1, TSPIKESOURCE_N = 8):
         simplets = pysynthsoma2.SimpleTSpike()
 
         # create the tspikes device
-        for j in range(10):
+        for j in range(1000):
             ts = pysynthsoma2.TSpike()
             ts.src = 0;
             ts.time = 50 * (j+1);
@@ -96,22 +96,24 @@ def create_default(ne1, nd1, TSPIKESOURCE_N = 8):
     edm[4] = ne1
 
     for src in range(TSPIKESOURCE_N):
-        simplets = pysynthsoma2.DSPBoard()
+        dspboard = pysynthsoma2.DSPBoard()
 
-##         # create the tspikes device
-##         for j in range(10):
-##             ts = pysynthsoma2.TSpike()
-##             ts.src = 0;
-##             ts.time = 50 * (j+1);
-##             ts.x.wave = [1000 * j * i for i in range(32)]
-##             ts.y.wave = [1000 * j * i for i in range(32)]
-##             ts.a.wave = [1000 * j * i for i in range(32)]
-##             ts.b.wave = [1000 * j * i for i in range(32)]
+        # now add data, roughly 20 Hz delta functions of 150uV
+        
+        N = 1000
+        samples = []
+        for i in range(N):
+            buf = []
+            for j in range(10):
+                buf.append(0.0)
+            samples.append(buf)
 
-
-##             simplets.addTSpike(ts)
-        edm[8 + src] = simplets
-        ddm[0 + src] = simplets
+        # now a single point
+        samples.append([150e-6 for i in range(10)])
+        
+        dspboard.setSampleBuffer(samples)
+        edm[8 + src] = dspboard
+        ddm[0 + src] = dspboard
 
     event_bus = pysynthsoma2.EventBus(edm)
     data_bus = pysynthsoma2.DataBus(ddm)

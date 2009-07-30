@@ -2,6 +2,8 @@
 #include <boost/foreach.hpp>
 #include <somanetwork/tspike.h>
 #include <somadspio/mockdspboard.h>
+#include <algorithm>
+
 
 namespace synthsoma2 {
 
@@ -40,10 +42,8 @@ namespace synthsoma2 {
     }
     dspboard_ = new somadspio::mock::MockDSPBoard (dsrc_, esrc_); 
     dspboard_->setEventTXCallback(boost::bind(&DSPBoard::sendevent_cb, this, _1)); 
+    dspboard_->setDataTXCallback(boost::bind(&DSPBoard::senddata_cb, this, _1)); 
     samplepos_ = 0.0; 
-    std::cout <<"creating dspboard with event src = " << (int)esrc_
-	      << " and data source =" 
-	      << (int)dsrc_ << std::endl; 
     // now launch runner thread
     running_ = true; 
     workerThread_ = new boost::thread(boost::bind(&DSPBoard::workerThread, this)); 
@@ -125,18 +125,23 @@ namespace synthsoma2 {
 	//
 	boost::array<int16_t, 10> samples;
 
+	samples_t insamples = *sampleiter_; 
   	for(int i = 0; i < 10; i++) {
-	  // 	  // FIXME do something about the gain
-   	  samples[i] = 0; 
+	  double voltsperbit = dspboard_->getSignalScale(i); 
+	  double val = round(insamples[i] /  voltsperbit); 
+	  int ival = int(val); 
+	  ival = std::max(ival, -32678); 
+	  ival = std::min(ival, 32767); 
+
+	  samples[i] = ival; 
   	}
 
  	dspboard_->addSamples(samples); 
 	
+	sampleiter_++; 	
 	if (sampleiter_ == sampleBuffer_.end()) {
 	  sampleiter_ = sampleBuffer_.begin(); 
-	} else {
-	  sampleiter_++; 
-	}
+	} 
 	samplepos_ -= 1.0; 
 	dspboard_->runloop(); 
       }
@@ -185,7 +190,7 @@ namespace synthsoma2 {
 
   }
 
-  
+
   void DSPBoard::setDeviceDataSrc(sn::datasource_t id) 
   {
     dsrc_ = id; 
@@ -194,7 +199,44 @@ namespace synthsoma2 {
 
   void DSPBoard::visitSubmitData(IDataBus * db)
   {
-    
+
+    boost::mutex::scoped_lock lock(outdatamutex_); 
+    if(!outdata_.empty()) {
+      // do we do any conversion here? 
+      unsigned char * pfront = outdata_.front(); 
+      // now we decode it? 
+      uint16_t npktlen; 
+      memcpy(&npktlen, pfront, sizeof(npktlen)); 
+      uint16_t hpktlen; 
+      hpktlen = ntohs(npktlen); 
+
+      unsigned char typ = pfront[2]; 
+      unsigned char src = pfront[3]; 
+      sn::pDataPacket_t dp(new sn::DataPacket_t); 
+      dp->missing = false; 
+      dp->seq = 0; 
+      dp->src = src; 
+      dp->typ = sn::charToDatatype(typ); 
+      memcpy(&(dp->body), &pfront[2], hpktlen); 
+      
+      if (typ == 0)  {
+	sn::TSpike_t ts =  rawToTSpike(dp);
+	db->newData(src, ts); 
+
+      } else if (typ == 1) {
+	sn::Wave_t w = rawToWave(dp); 
+	db->newData(src, w); 
+
+      } else if (typ == 2) {
+	sn::Raw_t r = rawToRaw(dp); 
+	db->newData(src, r); 
+      }
+
+      outdata_.pop_front(); 
+      delete pfront; 
+      
+    }
+
   }
   
   void DSPBoard::sendevent_cb(somanetwork::EventTX_t eb)
@@ -203,5 +245,13 @@ namespace synthsoma2 {
     outevents_.push_back(eb);     
 
   }
+
+  void DSPBoard::senddata_cb(unsigned char * data)
+  {
+    boost::mutex::scoped_lock lock(outdatamutex_); 
+    outdata_.push_back(data); 
+
+  }
+  
 
 }
