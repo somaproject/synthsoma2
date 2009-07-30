@@ -67,6 +67,10 @@ namespace synthsoma2
     boost::condition_variable ecyclecond_;
     boost::mutex ecyclemutex_;
 
+
+    boost::mutex eventinmutex_; 
+    std::list<somanetwork::Event_t> inevents_; 
+
   }; 
 
   typedef boost::shared_ptr<DSPBoard> pDSPBoard_t; 

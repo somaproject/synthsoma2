@@ -21,6 +21,12 @@ namespace synthsoma2
     src_ = id; 
   }
 
+  void TestDevice::ignoreSource(sn::eventsource_t src)
+  {
+    ignoredSources_.insert(src); 
+
+  }
+
   void TestDevice::ecycle(ecyclecnt_t cnt)
   {
     
@@ -52,11 +58,13 @@ namespace synthsoma2
 
   }
 
-  void TestDevice::sendEvent(const sn::Event_t & etx) 
+  void TestDevice::sendEvent(const sn::Event_t & et) 
   {
     boost::mutex::scoped_lock lock(inmutex_); 
-    
-    inboundevents_.push_back(etx); 
+    if (ignoredSources_.find(et.src) == ignoredSources_.end()) {
+      std::cout << et << std::endl; 
+      inboundevents_.push_back(et); 
+    }
     
   }
 

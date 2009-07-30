@@ -88,6 +88,11 @@ void DSPBoard_setSampleBuffer(synthsoma2::DSPBoard * dspb,
 
 }
 
+void setlogging()
+{
+  synthsoma2::init_logs(boost::logging::level::debug); 
+
+}
 
 BOOST_PYTHON_MODULE(pysynthsoma2)
 {
@@ -96,6 +101,8 @@ BOOST_PYTHON_MODULE(pysynthsoma2)
   /* -----------------------------------------------------------------------
      Utility
      ------------------------------------------------------------------------*/
+
+  def("setlogging", &setlogging); 
 
   class_<sn::EventTX_t>("EventTX"); 
 
@@ -180,7 +187,9 @@ BOOST_PYTHON_MODULE(pysynthsoma2)
   class_<TestDevice, bases<IEventDevice>, pTestDevice_t, 
     boost::noncopyable>("TestDevice")
     .def("sendTXEvents", &TestDevice_pySendTXEvents)
-    .def("getEvents", &TestDevice_pyGetReceivedEvents);
+    .def("getEvents", &TestDevice_pyGetReceivedEvents)
+    .def("ignoreSource", &TestDevice::ignoreSource); 
+  
 
    // Timer
    class_<Timer, bases<IEventDevice>, pTimer_t, boost::noncopyable>

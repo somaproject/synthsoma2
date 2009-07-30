@@ -103,7 +103,6 @@ namespace synthsoma2
     void newDatagram(const boost::system::error_code & error, 
 		     size_t bytes_recvd)
     {
-
       sn::EventTXList_t etl; 
       sn::eventtxnonce_t nonce =  sn::getEventListFromBuffer(data_, &etl); 
 

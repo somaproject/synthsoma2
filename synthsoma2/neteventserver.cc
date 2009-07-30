@@ -25,7 +25,7 @@ namespace synthsoma2
     
     pNetEventServer_t es(new NetEventServer(NetEventSender::createDomain(root), 
 					    NetEventReceiverFactory::createDomain(root))); 
-
+    
     return es; 
   }
 
@@ -39,12 +39,14 @@ namespace synthsoma2
   void NetEventServer::run()
   {
     pNetEventSender_->run(); 
+    pNetEventReceiver_->run(); 
     
   }
   
   void NetEventServer::shutdown()
   {
     pNetEventSender_->shutdown(); 
+    pNetEventReceiver_->shutdown(); 
     
   }
   
@@ -56,13 +58,13 @@ namespace synthsoma2
 
   const optEventTX_t NetEventServer::getTXEvent()
   {
-    optEventTX_t oetx;  // FIXME 
+    optEventTX_t oetx = pNetEventReceiver_->getInboundEvent(); 
+
     return oetx; 
   }
   
   void NetEventServer::sendEvent(const sn::Event_t & e)
   {
-    // pNetEventSender_->addEvents(el); // FIXME do something
     eventlist_t el; 
     el.push_back(e); 
     pNetEventSender_->addEvents(el); 

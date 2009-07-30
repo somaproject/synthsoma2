@@ -41,6 +41,9 @@ namespace synthsoma2 {
     dspboard_ = new somadspio::mock::MockDSPBoard (dsrc_, esrc_); 
     dspboard_->setEventTXCallback(boost::bind(&DSPBoard::sendevent_cb, this, _1)); 
     samplepos_ = 0.0; 
+    std::cout <<"creating dspboard with event src = " << (int)esrc_
+	      << " and data source =" 
+	      << (int)dsrc_ << std::endl; 
     // now launch runner thread
     running_ = true; 
     workerThread_ = new boost::thread(boost::bind(&DSPBoard::workerThread, this)); 
@@ -94,6 +97,26 @@ namespace synthsoma2 {
 	  ecyclecond_.wait(lock); 	
 	}
       }
+
+
+      // aggregate in and send the events  to the mock DSP board
+      sn::EventTXList_t etxl; 
+      {
+	
+	boost::mutex::scoped_lock lock(eventinmutex_);
+	for(std::list<somanetwork::Event_t>::iterator ei = inevents_.begin(); 
+	    ei != inevents_.end(); ++ei) {
+	  sn::EventTX_t etx; 
+	  etx.destaddr[esrc_] = true; 
+	  etx.event = *ei; 
+	  etxl.push_back(etx); 
+	}
+	inevents_.clear(); 
+      }
+
+      dspboard_->sendEvents(etxl); 
+
+
       newevent_ = false; 
       
       samplepos_ += 32000. / 50000. ; 
@@ -131,29 +154,35 @@ namespace synthsoma2 {
   {
     boost::mutex::scoped_lock lock(eventoutmutex_);
 
-    optEventTX_t ote; 
-    return ote; 
+    if (outevents_.empty()) {
+      optEventTX_t ote; 
+      return ote; 
 
-//     if (outevents_.empty()) {
-//       return ote; 
-
-//     } else {
-//       optEventTX_t ote = outevents_.front(); 
-//       outevents_.pop_front(); 
-//       return ote; 
-//     }
+    } else {
+      optEventTX_t ote = outevents_.front(); 
+      outevents_.pop_front(); 
+      return ote; 
+    }
 
   }
 
   void DSPBoard::sendEvent(const sn::Event_t & evt)
   {
-//     sn::EventTX_t etx; 
-//     etx.event = evt; 
-//     etx.destaddr[esrc_] = true; 
-//     // FIXME: mutex-protect? 
-//     sn::EventTXList_t etxl; 
-//     etxl.push_back(etx); 
-//     dspboard_->sendEvents(etxl); 
+    /*
+      There's a minor impedance mismatch here, in that the DSPboard
+      code wants a complete Event Cycle's worth of events at a time. 
+      So we batch up all the inbound events into a buffer, and
+      then send them at once. 
+
+     */ 
+    if (evt.src != 0) {
+      SS2L_(warning) << "DSPBoard " << (int)dsrc_ << " :" 
+		  << "received inbound event " << evt; 
+    }
+
+    boost::mutex::scoped_lock lock(eventinmutex_);
+    inevents_.push_back(evt); 
+
   }
 
   

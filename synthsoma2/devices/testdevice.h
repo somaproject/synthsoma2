@@ -19,6 +19,9 @@ namespace synthsoma2
     // Event Device Interface
     void ecycle(ecyclecnt_t);
     void setDeviceID(sn::eventsource_t id); 
+
+    void ignoreSource(sn::eventsource_t src); 
+
  
     const optEventTX_t getTXEvent(); 
     void sendEvent(const sn::Event_t &); 
@@ -38,6 +41,8 @@ namespace synthsoma2
 
     boost::mutex inmutex_; 
     boost::mutex outmutex_; 
+
+    std::set<sn::eventsource_t> ignoredSources_; 
 
   }; 
 
