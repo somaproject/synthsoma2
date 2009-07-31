@@ -1,3 +1,4 @@
+
 The design here is similar to soma, with a network layer handling all
 arbitration, retransmission, and packetizing.
 
@@ -6,4 +7,30 @@ Perhaps the only in-process event source will be the timer?
 EventCycle count: a 64-bit event cycle index. different from the
 system timer as we might want the system timer to start at a different
 offset for testing.
+
+
+
+Design Goals
+-----------------------------------------
+
+Sufficiently fast. That means that it's going
+to have to be able to send out:
+   Minimum 2000 event packets / sec
+   32 data sources at 1ksps 768-byte packets
+
+Multithreaded : Devices (both event and data) will
+be independently threaded, to both take advantage
+of contemporary multi-core processors and prevent
+blocking. 
+
+Code Reuse / real reuse: Be able to use the actual
+dspboard code
+
+Ease of implementation: be able to write python modules
+that emulate events
+
+We want this to work for both domain sockets and network sockets.
+
+The entire thing is controlled and scripted via python
+thanks to the magic that is boost::python
 

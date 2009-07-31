@@ -108,7 +108,7 @@ namespace synthsoma2 {
       db->setFrameLen(len); 
 
       datasink_->sendData(db);
-      SS2L_(info) << "DataBus:: sending TSpike from src = " 
+      SS2L_(info) << "DataBus: sending TSpike from src = " 
 		  << (int)src ; 
     }
     
@@ -116,28 +116,54 @@ namespace synthsoma2 {
 
   }
 
-  void DataBus::newData(sn::datasource_t src, const sn::Wave_t &)
+  void DataBus::newData(sn::datasource_t src, const sn::Wave_t & w)
   {
     if(datasink_) {
       
       DataBuffer * db = new DataBuffer(); 
-      // FIXME this is a libsomanetwork problem
-      SS2L_(info) << "DataBus:: warning WAVE not implemented for src " 
+
+      db->src = src; 
+      db->typ = sn::WAVE; 
+      size_t len; 
+      
+      
+      sn::pDataPacket_t dp = sn::rawFromWaveForTX(w,  &len); 
+      
+      memcpy(db->getFrameStartPtr(), &(dp->body[0]), len); 
+
+      db->setFrameLen(len); 
+
+      datasink_->sendData(db);
+
+      SS2L_(info) << "DataBus: sending WAVE from src = " 
 		  << (int)src ; 
 
     }
+
     stats_.submittedPackets++; 
   }
 
-  void DataBus::newData(sn::datasource_t src, const sn::Raw_t &) 
+  void DataBus::newData(sn::datasource_t src, const sn::Raw_t & r) 
   {
 
     if(datasink_) {
       DataBuffer * db = new DataBuffer(); 
 
+      db->src = src; 
+      db->typ = sn::RAW; 
+      size_t len; 
       
-      // FIXME this is a libsomanetwork problem
-      SS2L_(info) << "DataBus:: warning RAW not implemented for src " 
+      
+      sn::pDataPacket_t dp = sn::rawFromRawForTX(r, 0,  &len); 
+      
+      memcpy(db->getFrameStartPtr(), &(dp->body[0]), len); 
+
+      db->setFrameLen(len); 
+
+      datasink_->sendData(db);
+
+
+      SS2L_(info) << "DataBus: sending RAW from src = " 
 		  << (int)src ; 
 
     }

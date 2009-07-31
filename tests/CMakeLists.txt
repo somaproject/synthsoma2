@@ -53,6 +53,12 @@ add_executable(eventbus_test
   eventbus_test.cc
 )
 
+add_executable(databus_test
+  runner.cc
+  testutil.cc
+  databus_test.cc
+)
+
 
 add_executable(simpletspike_test
   runner.cc
@@ -66,6 +72,7 @@ set(testlist
   neteventsender_test
   neteventreceiver_test
   eventbus_test
+  databus_test
   datasequenceproto_test
   netdatasender_test
   simpletspike_test

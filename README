@@ -1,38 +1,16 @@
-This is our attempt at a v2 of SynthSoma. 
+Synthetic Soma 2 v 1.0 
 
-Goals: 
-
-Sufficiently performant. That means that it's going
-to have to be able to send out:
-   Minimum 2000 event packets / sec
-   32 data sources at 1ksps 768-byte packets
-
-Multithreaded : Devices (both event and data) will
-be independently threaded, to both take advantage
-of contemporary multi-core processors and prevent
-blocking. 
-
-Code Reuse / real reuse: Be able to use the actual
-dspboard code
-
-Ease of implementation: be able to write python modules
-that emulate events
-
-We want this to work for both domain sockets and network sockets.
-
-The entire thing is controlled and scripted via python
-thanks to the magic that is boost::python
+This is our second incarnation of Synthetic Soma. It
+allows us to benchmark and test Soma applications without
+having to worry about the Soma hardware. 
 
 Projects: 
-   libsynthsoma2 : the c++ library
-   pysynthsoma   : The python bindings to the c++ library, 
-                   along with some utility features
-   soma-synth    : The synthetic soma runner, with optional gui (in python).
-                   Easy to use, by default does "right thing" 
-
-
-Code overview
 --------------------------------------------------------------------
-synthsoma2   : Primary library
-pysynthsoma2 : Python bindings, helper funcs, etc. 
-somasynth    : runtime program 
+   libsynthsoma2  : the c++ library
+   pysynthsoma2   : The python bindings to the c++ library, 
+                    along with some utility features
+   soma-synth     : The synthetic soma runner, with optional gui (in python).
+                    Easy to use, by default does "right thing" 
+
+
+
