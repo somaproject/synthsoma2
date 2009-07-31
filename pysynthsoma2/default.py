@@ -10,7 +10,7 @@ import  pysynthsoma2
 import socket
 import time
 import tempfile
-
+import numpy as np
 
 def ip(ipaddr):
     """
@@ -40,6 +40,44 @@ def domain(rootdir = None):
         socks.append(sock)
 
     return ne1, nd1
+
+
+def createClusters():
+    """
+    Create four simple fake spikes based on four noisy cluster profiles.
+
+
+    """
+
+    proto_spikes_uv = [(300, 100, 150, 100)]
+##                        (100, 300, 100, 150),
+##                        (50, 100, 300, 100),
+##                        (50, 200, 200, 350)]
+    noise_uv = 15
+
+    def create_cluster(spoints):
+        x = np.zeros((32, 4))
+        x[8] = np.array(spoints) / 1e6
+        x[8] += np.random.normal(0, noise_uv/1e6, 4)
+        
+        return x
+    
+    interval_samples = 400 # space between spikes
+
+    samples = []
+
+    ITER = 100
+    for iter in range(ITER):
+        for ps in proto_spikes_uv:
+            samples += [[0 for i in range(10)] for j in range(interval_samples)]
+
+            cluster = create_cluster(ps)
+
+            for samp in cluster:
+                samples.append(samp.tolist() + [0.0] + samp.tolist() + [0.0])
+    for s in samples:
+        assert(len(s) == 10)
+    return samples
 
 
 def create_default_simple_tspike(ne1, nd1, TSPIKESOURCE_N = 8):
@@ -99,18 +137,7 @@ def create_default(ne1, nd1, TSPIKESOURCE_N = 8):
         dspboard = pysynthsoma2.DSPBoard()
 
         # now add data, roughly 20 Hz delta functions of 150uV
-        
-        N = 1000
-        samples = []
-        for i in range(N):
-            buf = []
-            for j in range(10):
-                buf.append(0.0)
-            samples.append(buf)
-
-        # now a single point
-        samples.append([150e-6 for i in range(10)])
-        
+        samples = createClusters()
         dspboard.setSampleBuffer(samples)
         edm[8 + src] = dspboard
         ddm[0 + src] = dspboard
