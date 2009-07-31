@@ -27,7 +27,11 @@ namespace synthsoma2
   class IEventDevice {
   public:
     virtual void ecycle(ecyclecnt_t) = 0; 
+    /* Called once per ecycle */ 
+
     virtual void setDeviceID(sn::eventsource_t id) = 0; 
+    /* Tell the device it's device ID; guaranteed to be called
+       before run */
 
     virtual const optEventTX_t getTXEvent() = 0; 
     /* Get a single TX event, may return an empty optional  */ 

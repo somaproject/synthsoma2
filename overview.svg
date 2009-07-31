@@ -156,6 +156,27 @@
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 0.5 : 1"
        sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2874"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2874-4"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2926"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -164,9 +185,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="343.23873"
-     inkscape:cy="601.11971"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="447.7218"
+     inkscape:cy="499.29685"
      inkscape:document-units="pt"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -195,7 +216,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -214,17 +235,6 @@
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
-       x="70"
-       y="152.36218"
-       id="text3592"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan3594"
-         x="70"
-         y="152.36218">Thread Runtime</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
        x="100"
        y="362.36218"
        id="text3592-5"
@@ -233,25 +243,6 @@
          id="tspan3594-2"
          x="100"
          y="362.36218">Event Bus</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
-       x="150"
-       y="402.36218"
-       id="text3592-5-4-7"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan3594-2-3-8"
-         x="150"
-         y="402.36218">EventRouter</tspan></text>
-    <rect
-       style="fill:none;stroke:#000000;stroke-width:2.50000000000000000;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect3671"
-       width="90"
-       height="30"
-       x="140"
-       y="320"
-       transform="translate(0,62.36218)" />
     <rect
        style="fill:none;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect3671-6"
@@ -323,95 +314,147 @@
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
-       x="60"
-       y="542.36218"
+       x="80"
+       y="602.36218"
        id="text3592-5-8-9"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3594-2-4-7"
-         x="60"
-         y="542.36218">NetEventServer</tspan></text>
+         x="80"
+         y="602.36218">NetEventServer</tspan></text>
     <rect
        style="fill:none;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect3671-6-3-7"
-       width="160"
-       height="90"
-       x="50"
-       y="522.36218" />
-    <rect
-       style="fill:none;stroke:#0000ff;stroke-width:5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect2818-1-8"
-       width="180"
-       height="110"
-       x="40"
-       y="512.36218" />
+       width="200"
+       height="180"
+       x="70"
+       y="582.36218" />
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
        x="410"
-       y="512.36218"
+       y="542.36218"
        id="text3592-5-8-9-2"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3594-2-4-7-9"
          x="410"
-         y="512.36218">NetDataServer</tspan></text>
+         y="542.36218">NetDataServer</tspan></text>
     <rect
        style="fill:none;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect3671-6-3-7-3"
        width="160"
-       height="90"
+       height="120"
        x="400"
-       y="492.36218" />
+       y="522.36218" />
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
-       x="390"
-       y="652.36218"
+       x="440"
+       y="612.36218"
        id="text3592-5-8-9-2-9"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3594-2-4-7-9-6"
-         x="390"
-         y="652.36218">NetDataSender</tspan></text>
+         x="440"
+         y="612.36218">NetDataSender</tspan></text>
     <rect
        style="fill:none;stroke:#0000ff;stroke-width:5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect2818-1-8-5"
        width="130"
        height="49.999996"
-       x="370"
-       y="622.36218" />
+       x="420"
+       y="582.36218" />
     <rect
        style="fill:none;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect3671-6-3-7-3-6"
        width="110"
        height="29.999998"
-       x="380"
+       x="430"
+       y="592.36218" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
+       x="120"
+       y="652.36218"
+       id="text3592-5-8-9-2-9-5"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3594-2-4-7-9-6-5"
+         x="120"
+         y="652.36218">NetEventSender</tspan></text>
+    <rect
+       style="fill:none;stroke:#0000ff;stroke-width:5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect2818-1-8-5-4"
+       width="140"
+       height="49.999996"
+       x="100"
+       y="622.36218" />
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3671-6-3-7-3-6-7"
+       width="120"
+       height="29.999998"
+       x="110"
        y="632.36218" />
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
-       x="570"
-       y="652.36218"
-       id="text3592-5-8-9-2-9-1"
+       x="120"
+       y="722.36218"
+       id="text3592-5-8-9-2-9-3"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
-         id="tspan3594-2-4-7-9-6-1"
-         x="570"
-         y="652.36218">NetDataReSender</tspan></text>
+         id="tspan3594-2-4-7-9-6-0"
+         x="120"
+         y="722.36218">NetEventReceiver</tspan></text>
     <rect
        style="fill:none;stroke:#0000ff;stroke-width:5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect2818-1-8-5-5"
-       width="130"
+       id="rect2818-1-8-5-7"
+       width="150"
        height="49.999996"
-       x="550"
-       y="622.36218" />
+       x="100"
+       y="692.36218" />
     <rect
        style="fill:none;stroke:#000000;stroke-width:2.5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect3671-6-3-7-3-6-9"
-       width="110"
+       id="rect3671-6-3-7-3-6-8"
+       width="130"
        height="29.999998"
-       x="560"
-       y="632.36218" />
+       x="110"
+       y="702.36218" />
+    <path
+       style="color:#000000;fill:none;stroke:#000000;stroke-width:1.25;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 150,430 -10,0 20,-30 20,30 -10,0 0,60 10,0 -20,30 -20,-30 10,0 0,-60 z"
+       id="path2912"
+       transform="translate(0,62.36218)" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
+       x="-562.1239"
+       y="164.47363"
+       id="text2914"
+       sodipodi:linespacing="125%"
+       transform="matrix(0,-1,1,0,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan2916"
+         x="-562.1239"
+         y="164.47363">IEventDevice</tspan></text>
+    <path
+       style="color:#000000;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.25;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 470,422.36218 20,0 0,70 10,0 -20,30 -20,-30 10,0 0,-70 z"
+       id="path2912-2"
+       sodipodi:nodetypes="cccccccc" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
+       x="-502.1239"
+       y="484.47363"
+       id="text2914-0"
+       sodipodi:linespacing="125%"
+       transform="matrix(0,-1,1,0,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan2916-6"
+         x="-502.1239"
+         y="484.47363">IDataSink</tspan></text>
   </g>
 </svg>

@@ -2,11 +2,16 @@
 The design here is similar to soma, with a network layer handling all
 arbitration, retransmission, and packetizing.
 
-Perhaps the only in-process event source will be the timer?
 
-EventCycle count: a 64-bit event cycle index. different from the
-system timer as we might want the system timer to start at a different
-offset for testing.
+
+SyntheticSomaRunner runs an independent thread, taking a
+pre-configured event bus and data bus. The event
+bus and data bus are sequenced in term, with the event
+bus running in SyntheticSomaRunner's thread
+and the data bus running independently. 
+
+Event Bus devices implmenet IEventBus, and Data Bus Devices
+implement IDataBus. 
 
 
 
