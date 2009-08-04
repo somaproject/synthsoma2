@@ -1,0 +1,60 @@
+synthsoma2 (0.9~somatesting-jaunty-github-090804172856) jaunty; urgency=low
+
+  * initial release of SynthSoma2
+  * initial test framework for building.
+  * Created benchmarks added logging infrastructure
+  * event router passes tests
+  * Created the NetEventSender which should dispatch inbound events out
+    the data interface.
+  * Everything seems to work, except the final delete dies.
+  * Fixed object-order-creation issues, now we don't segfault!
+  * NetDataSender works with somanetwork
+  * Created event and databus objects created synthsomarunner created
+    devices, including timer, to test.
+  * Created synthsoma2-level test utils, should delete old ones have
+    benchmark that is giving me fits with domain sockets
+  * Set socket to non-blocking, trap all socket-related errors.
+  * Initial creation of python modules.
+  * Build with indexing suite start creating tests
+  * Have most primary types being successfully created
+  * NetDataSender appears to work for TSpikes
+  * at the very least, the basic things run -- i have no idea if they
+    really work or not
+  * Data bus appears to at least send tspikes via domain sockets
+  * Successfully sends tspikes to tspikes
+  * Updated simpletspike to be able to send differing spikes TSpike and
+    TSpikeWave now can cross the python boundary, although poorly.
+  * added initial INet for network events fleshed out domain sockets for
+    data
+  * Added remaining devices
+  * can successfully send to four devices
+  * added performance monitor
+  * updates
+  * minor updates
+  * created benchtest.
+  * created eventbench, we really need to optimize things here.
+  * Removed eventourter, subsumed activity into simplified event bus
+    benchmark/eventbus.cc suggests we can do 64 spike sinks and ALMOST 4
+    Timer sources.
+  * updates to bench
+  * Preliminary tests of event receiver works. Time for a push-out.
+  * Updates to docs, runtime program.
+  * Reorganization of the repository in preparation for deployment.
+  * created some example runtime programs
+  * Removed extra dependency on HDF5
+  * More reorganization of project for installation
+  * At least with virtualenv, it seems that installation works
+  * New files for build system
+  * Added dspboard child
+  * Soma DSPboard interface can now successfully send and receive events
+  * Synth works for TSpikes, still need to do waves, retransmission
+  * Added resonable tspike generation.
+  * added better tspike defaults
+  * Added remaining data types to databus [[#4] state:resolved]
+  * Updated docs to be slightly more current, and overview svg. [#1
+    state:resolved]
+  * Git Revision Hash: 7c469fc50a25f52eed1aa5f7a79fbff643980b9b
+
+
+ -- Stuart Layton <slayton@mit.edu>  Tue, 04 Aug 2009 17:30:07 -0400
+
