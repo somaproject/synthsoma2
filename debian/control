@@ -1,0 +1,14 @@
+Source: synthsoma2
+Section: science
+Priority: extra
+Maintainer: Stuart Layton <slayton@mit.edu>
+Build-Depends: debhelper (>= 7), cdbs, libsomanetwork-dev, libsomadspio-dev, cmake,
+    libboost-thread1.37-dev, libboost-test1.37-dev, libboost-filesystem1.37-dev, 
+    libboost-program-options1.37-dev, libboost-system1.37-dev, libboost-signals1.37-dev,
+    libboost-python1.37-dev
+
+Standards-Version: 3.8.0
+Package: synthsoma
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: A software version of the Soma Hardware
