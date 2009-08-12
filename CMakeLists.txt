@@ -31,9 +31,9 @@ include_directories(ext-logging/boost)
 
 
 if(CMAKE_INSTALL_PREFIX) 
-  set(PY_SOMA_TARGET "${CMAKE_INSTALL_PREFIX}/lib/python2.6/soma_apps/")
+  set(PY_SOMA_TARGET "${CMAKE_INSTALL_PREFIX}/lib/python2.6/soma/")
 else(CMAKE_INSTALL_PREFIX)
-  set(PY_SOMA_TARGET "${PYTHON_SITE_PACKAGES_DIR}/soma_apps/")
+  set(PY_SOMA_TARGET "${PYTHON_SITE_PACKAGES_DIR}/soma/")
 endif(CMAKE_INSTALL_PREFIX)
 
 

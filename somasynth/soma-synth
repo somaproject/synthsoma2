@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 import os
 from optparse import OptionParser
-from soma_apps import pysynthsoma2
+from soma import pysynthsoma2
 import time
+import tempfile
 
 if __name__ == "__main__":
 
@@ -11,10 +12,19 @@ if __name__ == "__main__":
     parser.add_option("-i", "--ip", dest="ip",
                       help="ip address to send soma data to", default="127.0.0.1")
     
-    (options, args) = parser.parse_args()
+    parser.add_option("-d", "--domain", dest="use_domain",
+                      action="store_true", default=False, 
+                      help="use unix domain sockets in temp dir")
+
     
-    e, d = pysynthsoma2.default.ip(options.ip)
-    runner = pysynthsoma2.default.create_default(e, d, 1)
+    (options, args) = parser.parse_args()
+    if options.use_domain:
+        tempdir = tempfile.mkdtemp()
+        print "The domain root dir is ", tempdir
+        e, d = pysynthsoma2.default.domain(tempdir)
+    else:
+        e, d = pysynthsoma2.default.ip(options.ip)
+    runner = pysynthsoma2.default.create_default(e, d, 2, 0)
     
 
     runner.run()

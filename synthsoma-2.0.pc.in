@@ -3,4 +3,4 @@ Description: Synthetic Soma simulator library
 Requires: sigc++-2.0 >= 2.0 
 Version: ${LIBRARY_VERSION}
 Libs: -L${CMAKE_INSTALL_PREFIX}/lib/ -l$synthsoma2
-Cflags: -I${CMAKE_INSTALL_PREFIX}/include/synthsoma-2.0 -I${libdir}/synthsoma-2.0/include
+Cflags: -I${CMAKE_INSTALL_PREFIX}/include/synthsoma-2.0

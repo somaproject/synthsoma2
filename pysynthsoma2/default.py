@@ -80,6 +80,27 @@ def createClusters():
     return samples
 
 
+def createWaves():
+    """
+    Create a few different sinusoids at 32 kHz for wave tests
+    Note that frequently the only source hooked up to the "wavesource" device
+    is the continuous output.
+    """
+
+    freqs_hz = [8, 50, 150, 200, 100,
+                8, 50, 150, 200, 100]
+    FS = 32000
+    times = np.arange(0, FS) / FS
+
+    samples = []
+    for t in times:
+        s = []
+        for f in freqs_hz:
+            s.append(np.sin(2*np.pi * f * t))
+        samples.append(s)
+    print "The length of samples are", len(samples)
+    return samples
+
 def create_default_simple_tspike(ne1, nd1, TSPIKESOURCE_N = 8):
 
     edm = pysynthsoma2.EventDeviceMap()
@@ -120,8 +141,15 @@ def create_default_simple_tspike(ne1, nd1, TSPIKESOURCE_N = 8):
 
     return runner
 
-def create_default(ne1, nd1, TSPIKESOURCE_N = 8):
+def create_default(ne1, nd1, TSPIKESOURCE_N = 8, WAVESOURCE_N = 1):
+    """
+    Create TSPIKESOURCE_N tspike sources, on data sources
+    0 to TSPIKESOURCE_N-1
 
+    Create WAVESOURCE_N wave sources, on data sources
+    TSPIKESOURCE_N to TSPIKESOURCE_N+WAVESOURCE_N-1
+    
+    """
     edm = pysynthsoma2.EventDeviceMap()
     ddm = pysynthsoma2.DataDeviceMap()
     
@@ -142,6 +170,16 @@ def create_default(ne1, nd1, TSPIKESOURCE_N = 8):
         edm[8 + src] = dspboard
         ddm[0 + src] = dspboard
 
+    for src in range(TSPIKESOURCE_N, TSPIKESOURCE_N + WAVESOURCE_N):
+        dspboard = pysynthsoma2.DSPBoard()
+        # add sinusoidal data
+        samples = createWaves()
+        dspboard.setSampleBuffer(samples)
+        edm[8 + src] = dspboard
+        ddm[0 + src] = dspboard
+
+        
+        
     event_bus = pysynthsoma2.EventBus(edm)
     data_bus = pysynthsoma2.DataBus(ddm)
 
