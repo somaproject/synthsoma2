@@ -20,10 +20,10 @@ namespace synthsoma2 {
 
   void DSPBoard::ecycle(ecyclecnt_t cnt)
   {
-    {
-      boost::lock_guard<boost::mutex> lock(ecyclemutex_);
-      newevent_=true;
-    }
+//     {
+//       boost::lock_guard<boost::mutex> lock(ecyclemutex_);
+//       newevent_=true;
+//     }
     ecyclecond_.notify_one();
 
     
@@ -93,9 +93,8 @@ namespace synthsoma2 {
     while(running_) {
       {
 	boost::unique_lock<boost::mutex> lock(ecyclemutex_); 
-	while (!newevent_ and running_) {
-	  ecyclecond_.wait(lock); 	
-	}
+	ecyclecond_.wait(lock); 	
+
       }
 
 

@@ -54,7 +54,8 @@ def createClusters():
                        (50, 100, 300, 100),
                        (50, 200, 200, 350)]
     noise_uv = 15
-
+    fs = 32000.
+    
     def create_cluster(spoints):
         x = np.zeros((32, 4))
         x[8] = np.array(spoints) / 1e6
@@ -67,14 +68,28 @@ def createClusters():
     samples = []
 
     ITER = 100
+    f0 = 40.
+    f1 = 200.
+    amp = 1e-3
+    t = 0.0 
     for iter in range(ITER):
         for ps in proto_spikes_uv:
-            samples += [[0 for i in range(10)] for j in range(interval_samples)]
-
+            for i in range(interval_samples):
+                newsamp = [0 for j in range(10)]
+                newsamp[4] = np.sin(2*np.pi * f0 * t) * amp
+                newsamp[9] = np.sin(2*np.pi * f1 * t) * amp
+                samples.append(newsamp)
+                t += 1/fs
+                
             cluster = create_cluster(ps)
 
             for samp in cluster:
-                samples.append(samp.tolist() + [0.0] + samp.tolist() + [0.0])
+                newsamp = samp.tolist() + [0.0] + samp.tolist() + [0.0]
+
+                newsamp[4] = np.sin(2*np.pi * f0 * t) * amp
+                newsamp[9] = np.sin(2*np.pi * f1 * t) * amp
+                samples.append(newsamp)
+                t += 1/fs
     for s in samples:
         assert(len(s) == 10)
     return samples
@@ -87,16 +102,17 @@ def createWaves():
     is the continuous output.
     """
 
-    freqs_hz = [8, 50, 150, 200, 100,
-                8, 50, 150, 200, 100]
     FS = 32000
     times = np.arange(0, FS) / FS
 
     samples = []
     for t in times:
-        s = []
-        for f in freqs_hz:
-            s.append(np.sin(2*np.pi * f * t))
+        f0 = 50
+        f1 = 200
+        amp = 1e-3
+        s = [0., 0., 0., 0., 0., 0., 0., 0., 0., 0.]
+        s[4] = np.sin(2*np.pi * f0 * t) * amp
+        s[9] = np.sin(2*np.pi * f1 * t) * amp
         samples.append(s)
     print "The length of samples are", len(samples)
     return samples

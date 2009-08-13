@@ -24,14 +24,17 @@ if __name__ == "__main__":
         e, d = pysynthsoma2.default.domain(tempdir)
     else:
         e, d = pysynthsoma2.default.ip(options.ip)
-    runner = pysynthsoma2.default.create_default(e, d, 2, 0)
+    runner = pysynthsoma2.default.create_default(e, d, 1, 0)
     
 
     runner.run()
     while(True) :
         time.sleep(1)
         s = runner.getStats()
-        print s.eventcycles, s.eventcyclerate, s.datapackets, s.datapacketrate
+        print s.eventcycles, s.eventcyclerate, s.datapackets, s.datapacketrate, s.meanecycledur_us
+        if s.meanecycledur_us > 20.0:
+            print "Warning: mean cycle duration > 20 uS. This suggests your computer is too slow to simulate this many devices"
+            
     
     runner.shutdown()
     s = runner.getStats()

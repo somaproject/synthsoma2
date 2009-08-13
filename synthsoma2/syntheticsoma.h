@@ -18,13 +18,15 @@ namespace synthsoma2
     size_t eventreceivetotal; 
     size_t datapackets; 
     size_t datapacketrate; 
+    double meanecycledur_us; 
     runnerstats_t() :
       eventcycles(0),
       eventcyclerate(0.),
       eventsenttotal(0), 
       eventreceivetotal(0), 
       datapackets(0), 
-      datapacketrate(0)
+      datapacketrate(0),
+      meanecycledur_us(0.0)
     {
     }
     
@@ -43,7 +45,7 @@ namespace synthsoma2
     void run();     
     void shutdown(); 
     
-    void worker(const boost::system::error_code&); 
+    void worker(); 
     
     runnerstats_t getStats(); 
     
@@ -53,16 +55,9 @@ namespace synthsoma2
     pEventBus_t pEventBus_; 
     pDataBus_t pDataBus_; 
     
-    boost::asio::io_service ioservice_;
-
-    boost::asio::deadline_timer timer_; 
     boost::thread * pThread_; 
-    void timer_arm(); 
 
-
-    boost::asio::deadline_timer benchtimer_; 
-    void bench_timer_arm(); 
-    void benchmark(const boost::system::error_code&); 
+    void benchmark(); 
     
     boost::posix_time::ptime lastinvoke_; 
 

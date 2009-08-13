@@ -135,7 +135,8 @@ BOOST_PYTHON_MODULE(pysynthsoma2)
     .def_readonly("eventsenttotal", &runnerstats_t::eventsenttotal)
     .def_readonly("eventreceivetotal", &runnerstats_t::eventreceivetotal)
     .def_readonly("datapackets", &runnerstats_t::datapackets)
-    .def_readonly("datapacketrate", &runnerstats_t::datapacketrate); 
+    .def_readonly("datapacketrate", &runnerstats_t::datapacketrate)
+    .def_readonly("meanecycledur_us", &runnerstats_t::meanecycledur_us); 
 
 
   /* -----------------------------------------------------------------------
