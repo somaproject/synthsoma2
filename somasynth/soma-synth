@@ -7,8 +7,9 @@ import tempfile
 
 if __name__ == "__main__":
 
-
-    parser = OptionParser()
+    usage = """Synthetic Soma simulates soma hardware,
+    allowing you to test various pieces of soma software."""
+    parser = OptionParser(usage=usage)
     parser.add_option("-i", "--ip", dest="ip",
                       help="ip address to send soma data to", default="127.0.0.1")
     

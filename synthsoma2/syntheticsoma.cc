@@ -60,6 +60,8 @@ void SynthSomaRunner::worker()
     // now extract off 20-usec counts and send events
     time_duration consumed = seconds(0); 
     size_t eventcnt = 0; 
+    ptime start = microsec_clock::local_time(); 
+
     while (consumed < worktime) {
       // do an event cycle
       pEventBus_->eventcycle(); 
@@ -72,7 +74,7 @@ void SynthSomaRunner::worker()
     
     newlastinvoke = lastinvoke_ + consumed; 
     
-    time_duration actual_duration =  microsec_clock::local_time() - newlastinvoke; 
+    time_duration actual_duration =  microsec_clock::local_time() - start; 
     
     lastinvoke_ = newlastinvoke; 
     
@@ -80,7 +82,9 @@ void SynthSomaRunner::worker()
     runnerstats_.eventcycles += eventcnt; 
     runnerstats_.eventsenttotal = pEventBus_->getTotalCounts().first; 
     runnerstats_.eventreceivetotal = pEventBus_->getTotalCounts().second; 
-    runnerstats_.meanecycledur_us =  float(actual_duration.total_microseconds()) / eventcnt; 
+    if (eventcnt > 0) { 
+      runnerstats_.meanecycledur_us =  float(actual_duration.total_microseconds()) / eventcnt; 
+    }
   }
 }
 

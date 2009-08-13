@@ -27,6 +27,12 @@ pkg_check_modules(SOMADEPS REQUIRED
   somadspio-1.0>=1.0
 )
 
+
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/ext-logging/boost/boost/logging/logging.hpp")
+else(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/ext-logging/boost/boost/logging/logging.hpp")
+  message(FATAL_ERROR "Could not find boost logging submodule; perhaps you forgot to run the git commands 'git submodule init; git submodule update'? ")
+endif(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/ext-logging/boost/boost/logging/logging.hpp")
+
 include_directories(ext-logging/boost)
 
 
