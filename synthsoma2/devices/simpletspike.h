@@ -56,6 +56,7 @@ namespace synthsoma2
     somatime_t cyclestarttime_; 
 
     size_t tspikepos_; 
+    boost::mutex ecyclemutex_;
 
   }; 
 

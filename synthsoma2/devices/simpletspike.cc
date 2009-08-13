@@ -22,7 +22,9 @@ namespace synthsoma2 {
   }
   void SimpleTSpike::ecycle(ecyclecnt_t cnt)
   {
-    
+    // this is JUST FOR TIMING
+    boost::lock_guard<boost::mutex> lock(ecyclemutex_);
+ 
   }
 
   void SimpleTSpike::setDeviceID(sn::eventsource_t id)
@@ -52,12 +54,17 @@ namespace synthsoma2 {
   
   const optEventTX_t SimpleTSpike::getTXEvent()
   {
-
+    // this is JUST FOR TIMING
+    boost::lock_guard<boost::mutex> lock(ecyclemutex_);
+    optEventTX_t ot; 
+    return ot; 
 
   }
 
   void SimpleTSpike::sendEvent(const sn::Event_t & evt)
   {
+    boost::lock_guard<boost::mutex> lock(ecyclemutex_);
+
     if (evt.src == 0x00 && evt.cmd == 0x10 )
       {
 	// this is the time
@@ -80,6 +87,8 @@ namespace synthsoma2 {
 
   void SimpleTSpike::visitSubmitData(IDataBus * db)
   {
+    boost::lock_guard<boost::mutex> lock(ecyclemutex_);
+
     if (!tspikes_.empty()) { 
       if(!cycletimeset_){
 	cyclestarttime_ = somatime_; 
