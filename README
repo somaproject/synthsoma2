@@ -13,4 +13,11 @@ Projects:
                     Easy to use, by default does "right thing" 
 
 
+Note: While this is designed to be a feature-complete version,
+current computers _really have a hard time keeping up_ with the
+data transmission requirements. Doing _anything_ 50k times/sec is 
+quite demanding. Benchmarks suggest that simply acquiring a mutex
+can only be done about 20M times per second, which is only ~400 per
+ECYCLE (not too many for a lot of devices). Also, condition variables 
+are even slower, at 3.3M/sec. 
 
