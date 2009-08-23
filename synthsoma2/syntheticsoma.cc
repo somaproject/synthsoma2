@@ -71,7 +71,7 @@ void SynthSomaRunner::worker()
       
       consumed += microseconds(20); 
     }
-    
+
     newlastinvoke = lastinvoke_ + consumed; 
     
     time_duration actual_duration =  microsec_clock::local_time() - start; 

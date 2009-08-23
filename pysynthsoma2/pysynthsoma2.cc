@@ -194,7 +194,8 @@ BOOST_PYTHON_MODULE(pysynthsoma2)
 
    // Timer
    class_<Timer, bases<IEventDevice>, pTimer_t, boost::noncopyable>
-   ("Timer"); 
+     ("Timer")
+     .def("setTimeStamp", &Timer::setTimeStamp); 
 
 // Network Event Interface
    

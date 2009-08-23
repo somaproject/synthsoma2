@@ -108,6 +108,7 @@ namespace synthsoma2 {
 	  sn::EventTX_t etx; 
 	  etx.destaddr[esrc_] = true; 
 	  etx.event = *ei; 
+
 	  etxl.push_back(etx); 
 	}
 	inevents_.clear(); 
@@ -186,7 +187,6 @@ namespace synthsoma2 {
 
     boost::mutex::scoped_lock lock(eventinmutex_);
     inevents_.push_back(evt); 
-
   }
 
 

@@ -79,7 +79,7 @@ def createClusters():
                 newsamp[4] = np.sin(2*np.pi * f0 * t) * amp
                 newsamp[9] = np.sin(2*np.pi * f1 * t) * amp
                 samples.append(newsamp)
-                t += 1/fs
+                t += 1./fs
                 
             cluster = create_cluster(ps)
 
@@ -89,7 +89,7 @@ def createClusters():
                 newsamp[4] = np.sin(2*np.pi * f0 * t) * amp
                 newsamp[9] = np.sin(2*np.pi * f1 * t) * amp
                 samples.append(newsamp)
-                t += 1/fs
+                t += 1./fs
     for s in samples:
         assert(len(s) == 10)
     return samples
@@ -157,7 +157,8 @@ def create_default_simple_tspike(ne1, nd1, TSPIKESOURCE_N = 8):
 
     return runner
 
-def create_default(ne1, nd1, TSPIKESOURCE_N = 8, WAVESOURCE_N = 1):
+def create_default(ne1, nd1, TSPIKESOURCE_N = 8, WAVESOURCE_N = 1,
+                   timestart =0):
     """
     Create TSPIKESOURCE_N tspike sources, on data sources
     0 to TSPIKESOURCE_N-1
@@ -171,6 +172,7 @@ def create_default(ne1, nd1, TSPIKESOURCE_N = 8, WAVESOURCE_N = 1):
     
     #create the timer 
     td = pysynthsoma2.Timer()
+    td.setTimeStamp(timestart)
     edm[0] = td
 
     # create the network event device
