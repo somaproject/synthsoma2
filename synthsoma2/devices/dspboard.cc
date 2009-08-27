@@ -14,16 +14,20 @@ namespace synthsoma2 {
     running_(false), 
     dspboard_(NULL), 
     sampleBuffer_(1), 
-    sampleiter_(sampleBuffer_.begin())
+    sampleiter_(sampleBuffer_.begin()),
+    newevents_(0)
   {
   }
 
   void DSPBoard::ecycle(ecyclecnt_t cnt)
   {
-//     {
-//       boost::lock_guard<boost::mutex> lock(ecyclemutex_);
-//       newevent_=true;
-//     }
+    {
+      boost::lock_guard<boost::mutex> lock(ecyclemutex_);
+      newevents_++; 
+      boost::lock_guard<boost::mutex> lock2(eventinmutex_); 
+      allinevents_.push_back(inevents_); 
+      inevents_.clear();
+    }
     ecyclecond_.notify_one();
 
     
@@ -92,32 +96,45 @@ namespace synthsoma2 {
     // 
     while(running_) {
       {
-	boost::unique_lock<boost::mutex> lock(ecyclemutex_); 
-	ecyclecond_.wait(lock); 	
-
+	while(true) { 
+	  boost::unique_lock<boost::mutex> lock(ecyclemutex_); 
+	  if (newevents_ == 0) { 
+	    ecyclecond_.wait(lock); 	
+	  }
+	  if(newevents_ > 0) {
+	    newevents_--; 
+	    break; 
+	  }
+	}
       }
+      
 
 
       // aggregate in and send the events  to the mock DSP board
+      ineventlist_t newinevents; 
       sn::EventTXList_t etxl; 
-      {
-	
-	boost::mutex::scoped_lock lock(eventinmutex_);
-	for(std::list<somanetwork::Event_t>::iterator ei = inevents_.begin(); 
-	    ei != inevents_.end(); ++ei) {
-	  sn::EventTX_t etx; 
-	  etx.destaddr[esrc_] = true; 
-	  etx.event = *ei; 
 
-	  etxl.push_back(etx); 
+      {
+	boost::mutex::scoped_lock lock(eventinmutex_);
+	if (!allinevents_.empty()) { 
+	  newinevents = allinevents_.front(); 
+	  allinevents_.pop_front(); 
 	}
-	inevents_.clear(); 
       }
 
+      for(std::list<somanetwork::Event_t>::iterator ei = newinevents.begin(); 
+	  ei != newinevents.end(); ++ei) {
+	sn::EventTX_t etx; 
+	etx.destaddr[esrc_] = true; 
+	etx.event = *ei; 
+	
+	etxl.push_back(etx); 
+      }
+
+      
       dspboard_->sendEvents(etxl); 
 
 
-      newevent_ = false; 
       
       samplepos_ += 32000. / 50000. ; 
       
@@ -137,7 +154,8 @@ namespace synthsoma2 {
   	}
 
  	dspboard_->addSamples(samples); 
-	
+// 	std::cout << "add samples time=" << dspboard_->getTime() 
+// 		  << " samplepos_=" << samplepos_ << std::endl; 
 	sampleiter_++; 	
 	if (sampleiter_ == sampleBuffer_.end()) {
 	  sampleiter_ = sampleBuffer_.begin(); 
@@ -182,6 +200,8 @@ namespace synthsoma2 {
      */ 
     if (evt.src != 0) {
       SS2L_(warning) << "DSPBoard " << (int)dsrc_ << " :" 
+		  << "received inbound event " << evt; 
+      std::cout  << "DSPBoard " << (int)dsrc_ << " :" 
 		  << "received inbound event " << evt; 
     }
 

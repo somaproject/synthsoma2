@@ -67,13 +67,16 @@ namespace synthsoma2
     boost::circular_buffer<samples_t> sampleBuffer_; 
     boost::circular_buffer<samples_t>::iterator sampleiter_; 
 
-    bool newevent_; 
+    int newevents_; 
     boost::condition_variable ecyclecond_;
     boost::mutex ecyclemutex_;
 
 
     boost::mutex eventinmutex_; 
+    typedef std::list<somanetwork::Event_t> ineventlist_t; 
+
     std::list<somanetwork::Event_t> inevents_; 
+    std::list<ineventlist_t> allinevents_; 
 
     boost::mutex outdatamutex_; 
 

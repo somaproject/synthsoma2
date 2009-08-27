@@ -79,7 +79,7 @@ def createClusters():
                 newsamp[4] = np.sin(2*np.pi * f0 * t) * amp
                 newsamp[9] = np.sin(2*np.pi * f1 * t) * amp
                 samples.append(newsamp)
-                t += 1./fs
+                t += 1./(fs)
                 
             cluster = create_cluster(ps)
 
@@ -89,9 +89,10 @@ def createClusters():
                 newsamp[4] = np.sin(2*np.pi * f0 * t) * amp
                 newsamp[9] = np.sin(2*np.pi * f1 * t) * amp
                 samples.append(newsamp)
-                t += 1./fs
+                t += 1./(fs)
     for s in samples:
         assert(len(s) == 10)
+    
     return samples
 
 

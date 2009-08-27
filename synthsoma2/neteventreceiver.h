@@ -116,9 +116,7 @@ namespace synthsoma2
 
       SS2L_(debug) << "NetEventReceiver: received nonce=" 
 		  << nonce << " with " << etl.size() << "events" ; 
-      std::cout << "NetEventReceiver: received nonce=" 
-		  << nonce << " with " << etl.size() << "events" ; 
-      
+
       socket_.send_to(boost::asio::buffer(outbuf, 4), 
 		      remote_endpoint_); 
       

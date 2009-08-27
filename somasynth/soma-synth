@@ -35,9 +35,9 @@ if __name__ == "__main__":
     while(True) :
         time.sleep(1)
         s = runner.getStats()
-        print s.eventcycles, s.eventcyclerate, s.datapackets, s.datapacketrate, s.meanecycledur_us
-        if s.meanecycledur_us > 20.0:
-            print "Warning: mean cycle duration > 20 uS. This suggests your computer is too slow to simulate this many devices"
+        #print s.eventcycles, s.eventcyclerate, s.datapackets, s.datapacketrate, s.meanecycledur_us
+##         if s.meanecycledur_us > 20.0:
+##             print "Warning: mean cycle duration > 20 uS. This suggests your computer is too slow to simulate this many devices"
             
     
     runner.shutdown()
