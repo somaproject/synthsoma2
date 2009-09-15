@@ -201,8 +201,6 @@ namespace synthsoma2 {
     if (evt.src != 0) {
       SS2L_(warning) << "DSPBoard " << (int)dsrc_ << " :" 
 		  << "received inbound event " << evt; 
-      std::cout  << "DSPBoard " << (int)dsrc_ << " :" 
-		  << "received inbound event " << evt; 
     }
 
     boost::mutex::scoped_lock lock(eventinmutex_);

@@ -19,7 +19,9 @@ if __name__ == "__main__":
     parser.add_option("-t", "--startts", dest="startts",
                       help="starting timestamp, to simulate a Soma that's been on for a while", 
                       default=0)
-    
+    parser.add_option("-a", "--audio", dest="audio",
+                      help="Enable audio monitor on device 40",
+                      default=False)
     
     (options, args) = parser.parse_args()
     if options.use_domain:
@@ -28,7 +30,8 @@ if __name__ == "__main__":
         e, d = pysynthsoma2.default.domain(tempdir)
     else:
         e, d = pysynthsoma2.default.ip(options.ip)
-    runner = pysynthsoma2.default.create_default(e, d, 1, 0, int(options.startts))
+    runner = pysynthsoma2.default.create_default(e, d, 1, 0, int(options.startts),
+                                                 audio=options.audio)
     
 
     runner.run()

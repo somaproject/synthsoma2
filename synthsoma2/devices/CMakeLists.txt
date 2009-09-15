@@ -5,6 +5,7 @@ set(devices_SRCS
   timer.cc
   testdevice.cc
   simpletspike.cc
+  audiodevice.cc
   dspboard.cc
 )
 

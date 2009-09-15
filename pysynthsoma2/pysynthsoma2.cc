@@ -15,6 +15,7 @@
 #include <synthsoma2/devices/timer.h>
 #include <synthsoma2/devices/simpletspike.h>
 #include <synthsoma2/devices/dspboard.h>
+#include <synthsoma2/devices/audiodevice.h>
 #include <synthsoma2/neteventserver.h>
 #include <synthsoma2/netdataserver.h>
 
@@ -212,6 +213,7 @@ BOOST_PYTHON_MODULE(pysynthsoma2)
     pDSPBoard_t, boost::noncopyable>("DSPBoard")
     .def("setSampleBuffer", &DSPBoard_setSampleBuffer);
 
-
+   class_<AudioDevice, bases<IEventDevice>, 
+    pAudioDevice_t, boost::noncopyable>("AudioDevice"); 
 
 }
