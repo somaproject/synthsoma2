@@ -36,11 +36,12 @@ endif(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/ext-logging/boost/boost/logging/loggin
 include_directories(ext-logging/boost)
 
 
-if(CMAKE_INSTALL_PREFIX) 
-  set(PY_SOMA_TARGET "${CMAKE_INSTALL_PREFIX}/lib/python2.6/soma/")
-else(CMAKE_INSTALL_PREFIX)
-  set(PY_SOMA_TARGET "${PYTHON_SITE_PACKAGES_DIR}/soma/")
-endif(CMAKE_INSTALL_PREFIX)
+MESSAGE(STATUS "Attempting to discover where to install python module")
+execute_process ( COMMAND python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()" 
+  OUTPUT_VARIABLE PYTHON_SITE_PACKAGES_DIR OUTPUT_STRIP_TRAILING_WHITESPACE)
+
+
+set(PY_SOMA_TARGET "${PYTHON_SITE_PACKAGES_DIR}/soma/")
 
 
 INSTALL(FILES __init__.py  
