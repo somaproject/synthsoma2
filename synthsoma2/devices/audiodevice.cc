@@ -16,6 +16,7 @@ AudioDevice::AudioDevice() :
   rates_.push_back(220.0); 
   rates_.push_back(440.0); 
   rates_.push_back(1000); 
+  rates_.push_back(2600); 
 
 }
 
@@ -50,7 +51,13 @@ void AudioDevice::ecycle(ecyclecnt_t cnt)
       float rate = rates_[enabledChan_]; 
       
       for (int i = 0; i < 4; i++) {
-	etx.event.data[i+1] = int(sin(rate * signaltime_) * (1<<14)); // not full-scale
+// 	if (i % 2 ==0) { 
+// 	  etx.event.data[i+1] = (1<< 15) -1;
+// 	} else { 
+// 	  etx.event.data[i+1] = -(1<< 15) ;
+
+// 	}//  
+	etx.event.data[i+1] = int(0.9 * sin(rate * signaltime_ * 2 * 3.1415) * (1<<15)); // not full-scale
 	signaltime_ += FS; 	
 	
       }
@@ -90,13 +97,13 @@ void AudioDevice::sendEvent(const sn::Event_t & et)
 {
   if (et.cmd == AUDIO_CONTROL_CMD) { 
     // something changing the state? 
-    if (et.data[1]  == 1) { 
-      if (et.data[2] == 1) { 
+    if (et.data[0]  == 1) { 
+      if (et.data[1] == 1) { 
 	enabled_ = true; 
       } else { 
 	enabled_ = false; 
       }
-      enabledChan_ = et.data[3]; 
+      enabledChan_ = et.data[2]; 
   
       // send a status change update
 

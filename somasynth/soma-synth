@@ -20,8 +20,8 @@ if __name__ == "__main__":
                       help="starting timestamp, to simulate a Soma that's been on for a while", 
                       default=0)
     parser.add_option("-a", "--audio", dest="audio",
-                      help="Enable audio monitor on device 40",
-                      default=False)
+                      help="Enable synthetic audio monitor on deviceid",
+                      default=None)
     
     (options, args) = parser.parse_args()
     if options.use_domain:

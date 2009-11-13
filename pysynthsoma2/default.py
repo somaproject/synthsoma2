@@ -159,7 +159,7 @@ def create_default_simple_tspike(ne1, nd1, TSPIKESOURCE_N = 8):
     return runner
 
 def create_default(ne1, nd1, TSPIKESOURCE_N = 8, WAVESOURCE_N = 1,
-                   timestart =0, audio=False):
+                   timestart =0, audio=None):
     """
     Create TSPIKESOURCE_N tspike sources, on data sources
     0 to TSPIKESOURCE_N-1
@@ -197,9 +197,10 @@ def create_default(ne1, nd1, TSPIKESOURCE_N = 8, WAVESOURCE_N = 1,
         edm[8 + src] = dspboard
         ddm[0 + src] = dspboard
 
-    if audio:
+    if audio != None:
+        a = int(audio)
         aud = pysynthsoma2.AudioDevice()
-        edm[40] = aud
+        edm[a] = aud
             
         
     event_bus = pysynthsoma2.EventBus(edm)
