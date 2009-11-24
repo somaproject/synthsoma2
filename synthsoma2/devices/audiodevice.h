@@ -52,7 +52,7 @@ namespace synthsoma2
     float signaltime_; 
     
     std::vector<double> rates_;
-    
+    int volume_; 
     
   }; 
 

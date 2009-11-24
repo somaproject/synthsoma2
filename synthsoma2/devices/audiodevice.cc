@@ -10,7 +10,8 @@ AudioDevice::AudioDevice() :
   enabled_(false),
   enabledChan_(0),
   time_(0),
-  signaltime_(0.0)
+  signaltime_(0.0),
+  volume_(8)
 {
   rates_.push_back(80.0); 
   rates_.push_back(220.0); 
@@ -49,7 +50,11 @@ void AudioDevice::ecycle(ecyclecnt_t cnt)
       
       etx.event.data[0] = 1;
       float rate = rates_[enabledChan_]; 
-      
+
+      int vol = volume_ - 8; 
+      if (vol < 0) 
+	vol = 0; 
+
       for (int i = 0; i < 4; i++) {
 // 	if (i % 2 ==0) { 
 // 	  etx.event.data[i+1] = (1<< 15) -1;
@@ -57,7 +62,8 @@ void AudioDevice::ecycle(ecyclecnt_t cnt)
 // 	  etx.event.data[i+1] = -(1<< 15) ;
 
 // 	}//  
-	etx.event.data[i+1] = int(0.9 * sin(rate * signaltime_ * 2 * 3.1415) * (1<<15)); // not full-scale
+	
+	etx.event.data[i+1] = int(0.9 * sin(rate * signaltime_ * 2 * 3.1415) * (1<<15)) >>  vol; // not full-scale
 	signaltime_ += FS; 	
 	
       }
@@ -104,28 +110,31 @@ void AudioDevice::sendEvent(const sn::Event_t & et)
 	enabled_ = false; 
       }
       enabledChan_ = et.data[2]; 
-  
-      // send a status change update
-
-      sn::EventTX_t etx; 
-      // broadcast
-      for(int i = 0; i < somanetwork::ADDRBITS; i++) {
-	etx.destaddr[i] = true; 
-      }
-
-      etx.event.src = src_; 
-      etx.event.cmd = AUDIO_BCAST_CMD; 
       
-      etx.event.data[0] = 0;
-      etx.event.data[1] = enabled_; 
-      etx.event.data[2] = enabledChan_; 
-      etx.event.data[3] = 32000; 
-      outboundevents_.push_back(etx); 
-
-
+      volume_ = et.data[3]; 
+      // send a status change update
     }
     
+    sn::EventTX_t etx; 
+    // broadcast
+    for(int i = 0; i < somanetwork::ADDRBITS; i++) {
+      etx.destaddr[i] = true; 
+    }
+    
+    etx.event.src = src_; 
+    etx.event.cmd = AUDIO_BCAST_CMD; 
+    
+    etx.event.data[0] = 0;
+    etx.event.data[1] = enabled_; 
+    etx.event.data[2] = enabledChan_; 
+    etx.event.data[3] = 32000; 
+    etx.event.data[4] = volume_; 
+    outboundevents_.push_back(etx); 
+    
+    
   }
+  
+  
   
 
 }
